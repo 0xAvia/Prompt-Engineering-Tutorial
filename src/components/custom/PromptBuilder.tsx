@@ -1,4 +1,4 @@
-import { ChevronRight, Eye, KeyRound, Play, RotateCcw, Square } from "lucide-react";
+import { ChevronRight, Eye, EyeOff, KeyRound, Play, RotateCcw, Square } from "lucide-react";
 import { useMemo, useState } from "react";
 import { BUILDER_DEFAULTS, BUILDER_HISTORY as HISTORY, BUILDER_QUESTION as QUESTION, assemble, type PromptElement } from "../../content/builder";
 import type { PromptSpec } from "../../content/types";
@@ -26,7 +26,7 @@ export function PromptBuilder() {
   return (
     <div className="overflow-hidden rounded-2xl border border-line bg-surface shadow-card">
       <header className="border-b border-line px-4 py-3 sm:px-5">
-        <h4 className="font-semibold">Prompt builder: “Joe”, the career coach</h4>
+        <h3 className="font-semibold">Prompt builder: “Joe”, the career coach</h3>
         <p className="text-sm text-muted">Switch elements on and off, edit them, and watch the full prompt assemble below.</p>
       </header>
       <div className="space-y-5 p-4 sm:p-5">
@@ -107,7 +107,7 @@ export function PromptBuilder() {
 
         <div>
           <p className="mb-1.5 text-[0.8rem] font-semibold uppercase tracking-wide text-muted">The assembled prompt</p>
-          <div className="max-h-80 overflow-y-auto whitespace-pre-wrap break-words rounded-xl border border-line bg-surface-2/60 p-3.5 font-mono text-[0.8rem] leading-relaxed">
+          <div tabIndex={0} aria-label="The assembled prompt" className="max-h-80 overflow-y-auto whitespace-pre-wrap break-words rounded-xl border border-line bg-surface-2/60 p-3.5 font-mono text-[0.8rem] leading-relaxed">
             {prompt ? <FilledPrompt text={prompt} vars={vars} /> : <span className="text-faint">(every element is switched off)</span>}
           </div>
         </div>
@@ -120,6 +120,10 @@ export function PromptBuilder() {
           ) : apiKey ? (
             <button type="button" className={btn.primary} disabled={!prompt} onClick={() => void run(spec)}>
               <Play className="size-4 fill-current" aria-hidden /> Run
+            </button>
+          ) : demo && state.source === "demo" && state.status === "done" ? (
+            <button type="button" className={btn.secondary} onClick={reset}>
+              <EyeOff className="size-4" aria-hidden /> Hide Claude's answer
             </button>
           ) : demo ? (
             <button type="button" className={btn.primary} onClick={() => showDemo(demo)}>
@@ -145,7 +149,7 @@ export function PromptBuilder() {
           )}
           <span className="text-xs text-faint">Try: switch off Examples or Rules, or ask Joe something off-topic.</span>
         </div>
-        <ResponseView state={state} />
+        <ResponseView state={state} onClose={reset} />
       </div>
     </div>
   );

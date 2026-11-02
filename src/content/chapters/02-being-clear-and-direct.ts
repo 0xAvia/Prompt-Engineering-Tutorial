@@ -1,6 +1,18 @@
 import { contains, exactly, minWords } from "../../lib/graders";
+import type { Criterion } from "../types";
 import { md } from "../../lib/md";
 import type { Chapter } from "../types";
+
+const STORY = "Write the opening of a spooky bedtime story about an old lighthouse, in about 80 words, with lots of dramatic pauses and sound effects.";
+
+/** Exercise 2.4: everything in the story must be readable aloud. Exported for tests. */
+export const SPEAKABLE: Criterion[] = [
+  { label: "No ellipses (… or ...)", test: (t) => !/…|\.\.\./.test(t) },
+  { label: "No asterisks, hashes or other markdown symbols", test: (t) => !/[*#`]/.test(t) },
+  { label: "No dashes used as pauses (— or –)", test: (t) => !/[—–]|\s-\s/.test(t) },
+  { label: "No emoji", test: (t) => !/\p{Extended_Pictographic}/u.test(t) },
+  minWords(40),
+];
 
 export const ch02: Chapter = {
   id: "being-clear-and-direct",
@@ -124,27 +136,26 @@ export const ch02: Chapter = {
             to situations your rule didn't mention.
 
             Below, both prompts ban ellipses (“…”), and the second explains why: the text will be read aloud by a
-            text-to-speech engine. The story asks for lots of dramatic pauses and sound effects, exactly what ellipses
-            are usually used for. Run both and compare how each one writes those pauses: does the first just swap the
-            ellipses for dashes or other symbols a speech engine would stumble over too?
+            text-to-speech engine. The story asks for lots of dramatic pauses and sound effects. Run both and look
+            closely at how each one writes them.
           `,
         },
         {
           kind: "compare",
           before: {
             id: "2-why-plain",
-            prompt: { system: "Never use ellipses.", user: "Write the opening of a spooky bedtime story about an old lighthouse, in about 80 words, with lots of dramatic pauses and sound effects." },
+            prompt: { system: "Never use ellipses.", user: STORY },
           },
           after: {
             id: "2-why-reason",
             prompt: {
               system:
                 "Your response will be read aloud by a text-to-speech engine, so never use ellipses, since the engine doesn't know how to pronounce them.",
-              user: "Write the opening of a spooky bedtime story about an old lighthouse, in about 80 words, with lots of dramatic pauses and sound effects.",
+              user: STORY,
             },
           },
           takeaway:
-            "The rule only bans one symbol. The reason tells Claude the real goal (text that sounds right when read aloud), so it can handle cases the rule never mentioned. One sentence of “because…” often replaces a whole list of extra rules.",
+            "Look for symbols a speech engine would stumble over, like the asterisks in `*Creeeak.*`. When we recorded these answers, *both* versions used them, and the one that knew about text-to-speech used more. A reason tells Claude your goal, but it isn't a full specification: also say what good output looks like. You'll fix this one yourself in Exercise 2.4.",
         },
       ],
     },
@@ -241,6 +252,38 @@ Imagine you're a smart new colleague receiving these instructions with no other 
               maxTokens: 8000,
             },
             takeaway: "When you need a certain length, ask for it explicitly, and overshoot a little because Claude estimates rather than counts.",
+          },
+        },
+        {
+          kind: "exercise",
+          exercise: {
+            id: "2.4",
+            title: "Make it speakable",
+            goal: md`
+              This story will be read aloud by a text-to-speech engine. A rule against ellipses isn't enough: Claude can
+              still mark sound effects with symbols like \`*Creeeak.*\`, which a speech engine reads badly. Edit the
+              **system prompt** so the story contains only words a narrator could read aloud: no ellipses, asterisks,
+              dashes or emoji. Explain *why*, and describe *what to do instead*.
+            `,
+            start: { system: "Never use ellipses.", user: STORY },
+            editable: ["system"],
+            promptCriteria: [
+              {
+                label: "Your system prompt explains why (the text will be read aloud)",
+                test: (t) => /read aloud|text-to-speech|speech|spoken|narrat|listen/i.test(t),
+              },
+            ],
+            criteria: SPEAKABLE,
+            hints: [
+              "Start with the reason: the story will be read aloud by a text-to-speech engine, which reads symbols literally or skips them.",
+              "Then describe what you want instead of listing bans: pauses and sound effects written as words a narrator would say, like “the door creaked open” or “then, silence”.",
+            ],
+            solution: {
+              system:
+                "Your story will be read aloud by a text-to-speech engine, which can't pronounce symbols. Write only plain words with ordinary punctuation (full stops, commas and question marks), and no ellipses, asterisks, dashes, emoji or headings. Write pauses and sound effects as words a narrator would say, like “the door creaked open” or “then, silence”.",
+              user: STORY,
+            },
+            takeaway: "A reason gets you most of the way; describing exactly what good output looks like closes the gaps.",
           },
         },
       ],

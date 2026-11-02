@@ -3,6 +3,13 @@ import remarkGfm from "remark-gfm";
 import { GlossaryTerm } from "./GlossaryTerm";
 
 const components: Components = {
+  // Code blocks and tables can scroll sideways, so they must be reachable by keyboard.
+  pre({ children }) {
+    return <pre tabIndex={0}>{children}</pre>;
+  },
+  table({ children }) {
+    return <table tabIndex={0}>{children}</table>;
+  },
   a({ href, children }) {
     if (href?.startsWith("#g/")) {
       return <GlossaryTerm id={href.slice(3)}>{children}</GlossaryTerm>;

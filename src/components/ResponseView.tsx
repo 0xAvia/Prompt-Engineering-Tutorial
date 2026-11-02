@@ -1,4 +1,4 @@
-import { Brain, ChevronRight, KeyRound, Sparkles, TriangleAlert } from "lucide-react";
+import { Brain, ChevronRight, KeyRound, Sparkles, TriangleAlert, X } from "lucide-react";
 import { useState } from "react";
 import { stopNote } from "../lib/claude";
 import { estimateCost, formatCost } from "../lib/cost";
@@ -13,9 +13,11 @@ interface Props {
   wordCounter?: boolean;
   label?: string;
   compact?: boolean;
+  /** Show a close button that hides the answer. */
+  onClose?: () => void;
 }
 
-export function ResponseView({ state, wordCounter, label = "Claude's answer", compact }: Props) {
+export function ResponseView({ state, wordCounter, label = "Claude's answer", compact, onClose }: Props) {
   const { status, text, thinking, result, error, source } = state;
   if (status === "idle") return null;
   const running = status === "running";
@@ -23,7 +25,8 @@ export function ResponseView({ state, wordCounter, label = "Claude's answer", co
 
   return (
     <div className="rounded-xl border border-line bg-surface-2/60" aria-live="polite" aria-busy={running}>
-      <div className="flex flex-wrap items-center gap-x-3 gap-y-1 border-b border-line px-3.5 py-2 text-xs">
+      <div className="flex items-start gap-2 border-b border-line px-3.5 py-2 text-xs">
+        <div className="flex min-w-0 flex-1 flex-wrap items-center gap-x-3 gap-y-1">
         <span className="inline-flex items-center gap-1.5 font-semibold text-ink">
           <Sparkles className="size-3.5 text-accent" aria-hidden />
           {label}
@@ -48,12 +51,26 @@ export function ResponseView({ state, wordCounter, label = "Claude's answer", co
             </>
           )}
         </span>
+        </div>
+        {onClose && !running && (
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label={`Close ${label.toLowerCase()}`}
+            title="Close"
+            className="-my-1 -mr-1.5 rounded-md p-1 text-muted hover:bg-surface-3 hover:text-ink"
+          >
+            <X className="size-4" aria-hidden />
+          </button>
+        )}
       </div>
 
       {thinking && <ThinkingPanel thinking={thinking} running={running && !text} />}
 
       {(text || running) && (
         <div
+          tabIndex={0}
+          aria-label={`${label} text`}
           className={`whitespace-pre-wrap break-words px-3.5 py-3 font-mono text-[0.86rem] leading-relaxed ${compact ? "max-h-72" : "max-h-[32rem]"} overflow-y-auto`}
         >
           <span className={running ? "stream-caret" : ""}>{highlightTags(text)}</span>

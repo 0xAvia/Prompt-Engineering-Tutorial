@@ -170,7 +170,7 @@ export function PromptFields({ spec, onChange, editable, showSystem, freeform, s
             type="button"
             onClick={() => setPreviewOpen((o) => !o)}
             aria-expanded={previewOpen}
-            className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-muted hover:text-ink"
+            className="mt-2 inline-flex items-center gap-1 py-1 text-xs font-semibold text-muted hover:text-ink"
           >
             <ChevronRight className={`size-3.5 transition-transform ${previewOpen ? "rotate-90" : ""}`} aria-hidden />
             Preview what Claude actually receives
@@ -206,7 +206,7 @@ export function PromptFields({ spec, onChange, editable, showSystem, freeform, s
             </span>
             <ChevronRight className="ml-auto size-4 text-faint transition-transform group-open:rotate-90" aria-hidden />
           </summary>
-          <pre className="mt-2 overflow-x-auto font-mono text-[0.78rem] leading-relaxed">{JSON.stringify(spec.outputSchema, null, 2)}</pre>
+          <pre tabIndex={0} aria-label="JSON schema" className="mt-2 overflow-x-auto font-mono text-[0.78rem] leading-relaxed">{JSON.stringify(spec.outputSchema, null, 2)}</pre>
         </details>
       )}
 

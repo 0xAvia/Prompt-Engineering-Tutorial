@@ -1,4 +1,4 @@
-import { CodeXml, Eye, KeyRound, Play, RotateCcw, Square } from "lucide-react";
+import { CodeXml, Eye, EyeOff, KeyRound, Play, RotateCcw, Square } from "lucide-react";
 import { useMemo, useState } from "react";
 import type { EditableField, Example, PromptSpec } from "../content/types";
 import { resolveRequest } from "../lib/claude";
@@ -25,6 +25,9 @@ function defaultEditable(p: PromptSpec): EditableField[] {
 }
 
 export function PromptPlayground({ example, badge, freeform }: Props) {
+  // Titled playgrounds are named regions (landmarks); untitled ones are plain groups so
+  // a page never has several landmarks with the same name.
+  const Card = example.title ? "section" : "div";
   const { apiKey } = useAppState();
   const [spec, setSpec] = useState<PromptSpec>(example.prompt);
   const [showCode, setShowCode] = useState(false);
@@ -34,6 +37,7 @@ export function PromptPlayground({ example, badge, freeform }: Props) {
   const demo = useMemo(() => (apiKey ? null : getDemo(example.id, spec)), [apiKey, example.id, spec]);
   const { model } = useAppState();
   const running = state.status === "running";
+  const demoShown = state.source === "demo" && state.status === "done";
 
   const onRun = () => {
     if (apiKey) void run(spec);
@@ -42,9 +46,9 @@ export function PromptPlayground({ example, badge, freeform }: Props) {
   };
 
   return (
-    <section
+    <Card
       className="overflow-hidden rounded-2xl border border-line bg-surface shadow-card"
-      aria-label={example.title ?? "Prompt playground"}
+      {...(example.title ? { "aria-label": example.title } : { role: "group", "aria-label": badge ? `${badge.text}: prompt playground` : "Prompt playground" })}
       onKeyDown={(e) => {
         if ((e.metaKey || e.ctrlKey) && e.key === "Enter" && !running) {
           e.preventDefault();
@@ -63,7 +67,7 @@ export function PromptPlayground({ example, badge, freeform }: Props) {
               {badge.text}
             </span>
           )}
-          {example.title && <h4 className="font-semibold">{example.title}</h4>}
+          {example.title && <h3 className="font-semibold">{example.title}</h3>}
         </header>
       )}
 
@@ -88,6 +92,10 @@ export function PromptPlayground({ example, badge, freeform }: Props) {
           ) : apiKey ? (
             <button type="button" className={btn.primary} onClick={onRun}>
               <Play className="size-4 fill-current" aria-hidden /> {state.status === "idle" ? "Run" : "Run again"}
+            </button>
+          ) : demo && demoShown ? (
+            <button type="button" className={btn.secondary} onClick={reset}>
+              <EyeOff className="size-4" aria-hidden /> Hide Claude's answer
             </button>
           ) : demo ? (
             <button type="button" className={btn.primary} onClick={onRun}>
@@ -115,7 +123,13 @@ export function PromptPlayground({ example, badge, freeform }: Props) {
           </button>
           {!apiKey && (
             <span className="text-xs text-faint">
-              {demo ? "Demo mode: showing a recorded answer." : edited ? "Edited prompts need your own key." : "Add a key to run this live."}
+              {demo
+                ? demoShown
+                  ? "Demo mode: this is a recorded answer."
+                  : "Demo mode: a recorded answer is available."
+                : edited
+                  ? "Edited prompts need your own key."
+                  : "Add a key to run this live."}
             </span>
           )}
           {apiKey && !running && (
@@ -126,9 +140,9 @@ export function PromptPlayground({ example, badge, freeform }: Props) {
         </div>
 
         {showCode && <CodeView req={resolveRequest(spec, model)} />}
-        <ResponseView state={state} />
+        <ResponseView state={state} onClose={reset} />
       </div>
-    </section>
+    </Card>
   );
 }
 
@@ -147,7 +161,7 @@ export function Compare({
 }) {
   return (
     <div className="space-y-3">
-      {title && <h4 className="text-lg font-semibold">{title}</h4>}
+      {title && <h3 className="text-lg font-semibold">{title}</h3>}
       <div className="grid gap-4 2xl:grid-cols-2">
         <PromptPlayground example={before} badge={labels ? { text: labels[0], tone: "neutral" } : { text: "Before", tone: "before" }} />
         <PromptPlayground example={after} badge={labels ? { text: labels[1], tone: "neutral" } : { text: "After", tone: "after" }} />
