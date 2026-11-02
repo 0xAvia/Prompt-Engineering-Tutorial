@@ -98,3 +98,28 @@ describe("tools (10.2)", () => {
     expect(DB_TESTS.find((t) => t.expectTool === "fn_b")!.inputOk({ x: "3" })).toBe(true);
   });
 });
+
+describe("exercise 2.4 (make it speakable)", async () => {
+  const { SPEAKABLE } = await import("../src/content/chapters/02-being-clear-and-direct");
+  const passes = (t: string) => SPEAKABLE.every((c) => c.test(t));
+
+  it("rejects the asterisk sound effects Claude actually wrote", () => {
+    // From the recorded answer for the "with a reason" version in Chapter 2.
+    expect(passes("*Creeeak.* The old lighthouse stood alone on the cliff, its lamp long dark. *Whooo-ooo.* The wind called through the broken glass. *Boom. Hiss. Boom.* The waves struck the rocks below. *Creak.* Pause. *Creak.* Someone was climbing the stairs.")).toBe(false);
+  });
+
+  it("rejects ellipses, dash pauses and emoji", () => {
+    const base = "The old lighthouse stood alone on the cliff, its lamp long dark, and the wind called through the broken glass while waves struck the rocks below and something slowly climbed the stairs";
+    expect(passes(base + "... then silence.")).toBe(false);
+    expect(passes(base + " — then silence.")).toBe(false);
+    expect(passes(base + " 👻")).toBe(false);
+  });
+
+  it("accepts a story with the sounds written as words, including hyphenated words", () => {
+    expect(
+      passes(
+        "The old lighthouse stood alone on the cliff. The iron door creaked open, slowly, all by itself. Then, silence. The wind moaned through the broken glass, and far below, the waves boomed against the rocks. Somewhere above, a bone-dry step groaned. Something was climbing the stairs.",
+      ),
+    ).toBe(true);
+  });
+});

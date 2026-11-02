@@ -82,7 +82,8 @@ export const ch03: Chapter = {
             id: "3-role-lawyer",
             prompt: { system: "You are a consumer-protection lawyer who reviews contracts for ordinary people.", user: GYM },
           },
-          takeaway: "Same question, different expert. The role decides which details matter, like notice periods, cancellation terms and fees, and how deep the answer goes.",
+          takeaway:
+            "Both answers usually cover the basics, like notice periods and fees. The difference is focus: the lawyer turns to your legal rights, keeping proof that you cancelled, and where to complain if the gym won't let you go, while the plain answer spends its space on things like opening hours.",
         },
         {
           kind: "callout",

@@ -58,7 +58,10 @@ export const ch10_1: Chapter = {
           md: md`
             Does asking “are you sure?” make Claude change a *correct* answer? Below, the first answer is already correct:
             every word is real, even if a few (squab, confab, prefab) look made up. Compare a follow-up **without** an out
-            to one **with** an out (Chapter 8's trick). Run each a few times: one run can't show what's *likely*.
+            to one **with** an out (Chapter 8's trick).
+
+            Current models usually stick to a correct answer, so you may well see no difference here. Older and smaller
+            models were more easily talked out of a right answer just because they were asked to look for mistakes.
           `,
         },
         {
@@ -83,7 +86,8 @@ export const ch10_1: Chapter = {
               user: "Please find replacements for all 'words' that are not real words. If all the words are real words, return the original list.",
             },
           },
-          takeaway: "Asked to find mistakes, Claude may “fix” real words that only look wrong. An out makes it easier to stick to a correct answer instead of changing things for the sake of it.",
+          takeaway:
+            "If both versions kept the list, that's a current model being robust. The out still costs one sentence, and it protects you on the occasions a model would otherwise change a correct answer for the sake of finding a mistake.",
         },
       ],
     },
