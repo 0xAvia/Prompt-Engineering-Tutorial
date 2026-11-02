@@ -1,17 +1,18 @@
 import { md } from "../../lib/md";
 import type { Chapter } from "../types";
 
+// Every word here is real, but a few look made up. That's what tempts a "fix".
 const AB_LIST = `Here are 10 words that end with the letters 'ab':
 1. Cab
-2. Dab
-3. Grab
-4. Gab
-5. Jab
-6. Lab
-7. Nab
-8. Slab
-9. Tab
-10. Blab`;
+2. Squab
+3. Confab
+4. Prefab
+5. Kebab
+6. Rehab
+7. Taxicab
+8. Scab
+9. Stab
+10. Crab`;
 
 export const ch10_1: Chapter = {
   id: "chaining-prompts",
@@ -55,9 +56,9 @@ export const ch10_1: Chapter = {
         {
           kind: "text",
           md: md`
-            Does asking “are you sure?” make Claude change a *correct* answer? Below, the first answer is already correct
-            (every word is real). Compare a follow-up **without** an out to one **with** an out (Chapter 8's trick). Run each a
-            few times.
+            Does asking “are you sure?” make Claude change a *correct* answer? Below, the first answer is already correct:
+            every word is real, even if a few (squab, confab, prefab) look made up. Compare a follow-up **without** an out
+            to one **with** an out (Chapter 8's trick). Run each a few times: one run can't show what's *likely*.
           `,
         },
         {
@@ -82,7 +83,7 @@ export const ch10_1: Chapter = {
               user: "Please find replacements for all 'words' that are not real words. If all the words are real words, return the original list.",
             },
           },
-          takeaway: "With an out, Claude is much more likely to stick to a correct answer instead of changing things for the sake of it.",
+          takeaway: "Asked to find mistakes, Claude may “fix” real words that only look wrong. An out makes it easier to stick to a correct answer instead of changing things for the sake of it.",
         },
       ],
     },

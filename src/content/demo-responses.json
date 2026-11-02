@@ -35,20 +35,6 @@
     "model": "claude-haiku-5-5",
     "recordedAt": "2026-11-02"
   },
-  "10.1-ab-no-out": {
-    "hash": "71ed3a78",
-    "text": "All ten words are real English words, so no replacements are needed:\n\n1. Cab\n2. Dab\n3. Grab\n4. Gab\n5. Jab\n6. Lab\n7. Nab\n8. Slab\n9. Tab\n10. Blab",
-    "thinking": "Checking each word: cab, dab, grab, gab, jab, lab, nab, slab, tab, blab — all genuinely real English words, so none need replacing. I'll just confirm that honestly.\n\n",
-    "model": "claude-haiku-5-5",
-    "recordedAt": "2026-11-02"
-  },
-  "10.1-ab-out": {
-    "hash": "99fbcbcb",
-    "text": "All of these are real English words, so here is the original list:\n\n1. Cab\n2. Dab\n3. Grab\n4. Gab\n5. Jab\n6. Lab\n7. Nab\n8. Slab\n9. Tab\n10. Blab",
-    "thinking": "Checking the list - Cab, Dab, Grab, Gab, Jab, Lab, Nab, Slab, Tab, Blab - all of these are genuine English words, so the original list looks good as is.\n\n",
-    "model": "claude-haiku-5-5",
-    "recordedAt": "2026-11-02"
-  },
   "2-critique": {
     "hash": "27c6999d",
     "text": "**Questions I'd need answered before starting**\n\n1. **Where are the meeting notes?** Are they pasted into the chat, attached as a file, or do I need to find them somewhere?\n2. **Who is \"the team\"?** Their role, seniority, and familiarity with the project affect what they need to know and what jargon is fine to use.\n3. **What is the summary for?** A quick morning skim, a record for people who missed the meeting, a prep document for the next meeting, or a decision log all call for different content.\n4. **How long should it be?** A few bullets, a one-page memo, or a detailed recap?\n5. **What format do they expect?** Prose, bullet points, headers by topic, or a table of action items?\n6. **What matters most?** Decisions, action items with owners and deadlines, open questions, risks, or background discussion? Should I include everything or only the important parts?\n7. **Are there action items I should flag specifically?** If so, do they need owners and due dates pulled out separately?\n8. **Should I note disagreements or unresolved points,** or only what was agreed?\n9. **Is there a standard template or house style** the team already uses?\n10. **How should I handle gaps?** If the notes are unclear, incomplete, or name someone without context, should I guess, mark it as unclear, or ask you?\n11. **Are there sensitivities?** Should anything be left out, such as personnel matters or confidential figures?\n12. **What's the deadline or context for delivery?** Is this going out today, or is it a draft for review?\n\n**Improved prompt**\n\n> You're helping me prepare a summary of a team meeting for distribution to the [team name / role, e.g., the 8-person product engineering team] who [did / did not] attend.\n>\n> The raw meeting notes are below, between the tags.\n>\n> <meeting_notes>\n> [paste notes here]\n> </meeting_notes>\n>\n> Please write a summary that:\n> - Opens with one or two sentences on the meeting's main purpose and outcome.\n> - Lists decisions made, in a bulleted list.\n> - Lists action items in a table with columns for Owner, Task, and Due date. If an owner or date isn't in the notes, write \"Not specified\" instead of guessing.\n> - Briefly notes any open questions or disagreements that were not resolved.\n>\n> Keep the total length under 300 words. Use plain language and avoid internal acronyms unless they appear in the notes, in which case define them on first use. Leave out small talk and tangents. If something in the notes is unclear, flag it in a final section titled \"Needs clarification\" rather than interpreting it.\n>\n> The summary will be read by people who missed the meeting and need to know what changed and what they must do.",
@@ -82,32 +68,6 @@
   "2-specific": {
     "hash": "c0d3743b",
     "text": "Photosynthesis is the process by which plants, algae, and some bacteria use light energy to convert carbon dioxide and water into glucose (a sugar) and oxygen. It is the foundation of nearly all life on Earth, since it produces the food and oxygen that most organisms depend on.\n\n**The basic equation:**\n\n6CO₂ + 6H₂O + light energy → C₆H₁₂O₆ + 6O₂\n\nCarbon dioxide + water + light → glucose + oxygen\n\n**Where it happens:**\n\nIn plants, photosynthesis takes place mainly in the **chloroplasts**, organelles found in leaf cells. Chloroplasts contain **chlorophyll**, a green pigment that absorbs mainly red and blue light (and reflects green, which is why plants look green).\n\n**The two main stages:**\n\n1. **Light-dependent reactions** (in the thylakoid membranes)\n   - Chlorophyll absorbs sunlight, exciting electrons.\n   - Water molecules are split, releasing oxygen as a byproduct.\n   - The energy is captured in two molecules: **ATP** and **NADPH**.\n\n2. **Light-independent reactions, or the Calvin cycle** (in the stroma)\n   - Carbon dioxide from the air is fixed into organic molecules using the ATP and NADPH from the first stage.\n   - Through a series of enzyme-driven steps, this carbon is assembled into glucose and other sugars.\n\n**Why it matters:**\n\n- **Food:** Nearly every food chain starts with photosynthetic organisms.\n- **Oxygen:** It supplies the oxygen in the atmosphere that most living things breathe.\n- **Carbon cycle:** It removes CO₂ from the atmosphere and stores carbon in biomass.\n- **Energy:** Fossil fuels are ultimately stored ancient sunlight captured by photosynthesis.\n\nIn short, photosynthesis turns light energy into chemical energy stored in sugars, which powers life on Earth.",
-    "model": "claude-haiku-5-5",
-    "recordedAt": "2026-11-02"
-  },
-  "2-why-plain": {
-    "hash": "8142e338",
-    "text": "The lighthouse stood alone at the end of Gull Point, its white paint peeling like old skin. Every night, when the moon rose over the water, its lamp would flicker on by itself. Mabel had never seen it happen, but her grandmother had. \"Keep your window shut,\" Grandma always said, \"and never answer if the foghorn calls your name.\" Tonight, the wind was whispering. And somewhere out in the dark, a single light began to blink.",
-    "model": "claude-haiku-5-5",
-    "recordedAt": "2026-11-02"
-  },
-  "2-why-reason": {
-    "hash": "dc66bf6c",
-    "text": "The wind whistled through the cracks of Blackwater Point, where an old lighthouse stood tall against the stormy sky. Every night, its lamp swept slowly across the waves, and every night, Lily watched it from her bedroom window. One evening, the beam paused. It stayed fixed on her window, bright and steady, as if someone inside the tower wanted to tell her something. Lily pulled her blanket up to her chin and whispered, \"Who's there?\" From far below, a soft voice answered, \"Come and see, little one. The lamp needs a keeper.\"",
-    "model": "claude-haiku-5-5",
-    "recordedAt": "2026-11-02"
-  },
-  "3-logic-plain": {
-    "hash": "89c7f390",
-    "text": "**Yes.** The answer holds whether or not Anne is married:\n\n- **If Anne is married:** Anne is married and looking at George, who is unmarried. A married person is looking at an unmarried person.\n- **If Anne is unmarried:** Jack is married and looking at Anne, who is unmarried. Again, a married person is looking at an unmarried person.\n\nSince Anne's status is either married or unmarried, one of these cases must hold, so the answer is yes either way.",
-    "thinking": "I need to check whether Anne's marital status is known or not — but it turns out it doesn't matter. If Anne is married, she's looking at unmarried George; if Anne is unmarried, she's being looked at by married Jack. Either way, a married person is looking at an unmarried person, so the answer is yes.\n\n",
-    "model": "claude-haiku-5-5",
-    "recordedAt": "2026-11-02"
-  },
-  "3-logic-role": {
-    "hash": "2b576a7f",
-    "text": "**Yes.** A married person is looking at an unmarried person, regardless of whether Anne is married.\n\n- **If Anne is married:** Anne is married and looks at George, who is unmarried. So a married person (Anne) is looking at an unmarried person (George).\n- **If Anne is unmarried:** Jack is married and looks at Anne, who is unmarried. So a married person (Jack) is looking at an unmarried person (Anne).\n\nAnne must be either married or unmarried, and each case gives a married person looking at an unmarried person, so the conclusion holds either way.",
-    "thinking": "This is the classic case-split puzzle: Anne's marital status is unknown, but either way someone married ends up looking at someone unmarried. If Anne is married, she looks at unmarried George; if unmarried, married Jack looks at her. So the answer holds true regardless of Anne's status: yes, a married person is looking at an unmarried person.\n\n",
     "model": "claude-haiku-5-5",
     "recordedAt": "2026-11-02"
   },

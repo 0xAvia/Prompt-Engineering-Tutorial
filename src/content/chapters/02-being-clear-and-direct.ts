@@ -123,26 +123,28 @@ export const ch02: Chapter = {
             A rule on its own tells Claude *what*. Adding the reason tells it *why*, and Claude can then apply the idea
             to situations your rule didn't mention.
 
-            Below, both prompts ban ellipses (“…”). The second explains that the text will be read aloud by a
-            text-to-speech engine. Run both and look beyond the ellipses: does the second version also avoid other
-            things a speech engine would stumble over, like symbols, emoji or headings?
+            Below, both prompts ban ellipses (“…”), and the second explains why: the text will be read aloud by a
+            text-to-speech engine. The story asks for lots of dramatic pauses and sound effects, exactly what ellipses
+            are usually used for. Run both and compare how each one writes those pauses: does the first just swap the
+            ellipses for dashes or other symbols a speech engine would stumble over too?
           `,
         },
         {
           kind: "compare",
           before: {
             id: "2-why-plain",
-            prompt: { system: "Never use ellipses.", user: "Write the opening of a spooky bedtime story about an old lighthouse, in about 80 words." },
+            prompt: { system: "Never use ellipses.", user: "Write the opening of a spooky bedtime story about an old lighthouse, in about 80 words, with lots of dramatic pauses and sound effects." },
           },
           after: {
             id: "2-why-reason",
             prompt: {
               system:
                 "Your response will be read aloud by a text-to-speech engine, so never use ellipses, since the engine doesn't know how to pronounce them.",
-              user: "Write the opening of a spooky bedtime story about an old lighthouse, in about 80 words.",
+              user: "Write the opening of a spooky bedtime story about an old lighthouse, in about 80 words, with lots of dramatic pauses and sound effects.",
             },
           },
-          takeaway: "Claude generalizes from the reason. One sentence of “because…” often replaces a whole list of extra rules.",
+          takeaway:
+            "The rule only bans one symbol. The reason tells Claude the real goal (text that sounds right when read aloud), so it can handle cases the rule never mentioned. One sentence of “because…” often replaces a whole list of extra rules.",
         },
       ],
     },
