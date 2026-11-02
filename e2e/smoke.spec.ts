@@ -231,3 +231,12 @@ test("a chain feeds step 1's answer into step 2", async ({ page }) => {
   await expect.poll(() => requests.length).toBe(2);
   expect((requests[1].body.messages as { content: string }[])[0].content).toContain("<names>\nJesse\nErin\n</names>");
 });
+
+test("the built page ships a Content-Security-Policy that only allows talking to Anthropic", async ({ page }) => {
+  await page.goto("#/");
+  const csp = await page.locator('meta[http-equiv="Content-Security-Policy"]').getAttribute("content");
+  expect(csp).toContain("connect-src 'self' https://api.anthropic.com");
+  expect(csp).toContain("script-src 'self' 'sha256-");
+  expect(csp).not.toContain("script-src 'self' 'unsafe-inline'");
+  expect(csp).toContain("object-src 'none'");
+});

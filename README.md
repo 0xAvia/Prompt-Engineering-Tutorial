@@ -30,6 +30,19 @@ The default model is **Claude Haiku 5.5** ($0.10 / $0.50 per million input/outpu
 
 **No key?** Demo mode still lets people read every lesson, take the quizzes, and see recorded answers for the lesson examples (see below).
 
+## Security
+
+The whole design goal is that a learner's API key never goes anywhere except Anthropic.
+
+- **No server, no third parties.** The site is static. The built page loads no external scripts, styles or fonts, and makes no network requests other than to `https://api.anthropic.com` with the learner's own key.
+- **Content-Security-Policy.** The build bakes a CSP `<meta>` tag into `index.html` (`cspMeta` in `vite.config.ts`): scripts only from the site itself, and `connect-src` limited to Anthropic. Even if a script-injection bug were ever introduced, it could not send the key elsewhere.
+- **Nothing is rendered as HTML.** Lesson text goes through react-markdown with raw HTML disabled; prompts and Claude's answers are rendered as plain text, never as markup.
+- **Key storage.** "Remember on this device" keeps the key in `localStorage`; otherwise it lives in `sessionStorage` and is gone when the tab closes. Settings shows only the last four characters. Anyone who can run code in the learner's browser on this site's origin (a browser extension, or a person at an unlocked shared computer) could read it, which the key dialog warns about.
+- **Shared origin on github.io.** `localStorage` is per origin, and every project site under the same `<user>.github.io` shares one origin. If you host other projects on the same GitHub Pages account, their scripts could read a key saved here. Serving the course from its own custom domain avoids that.
+- **Recommendation for learners** (shown on the setup page): create a dedicated key for the course and set a spend limit on it in the Claude Console.
+
+Found a problem? Please open an issue.
+
 ## Run it locally
 
 Needs Node 22+.
