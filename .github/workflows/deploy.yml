@@ -25,11 +25,8 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm test
-      - name: Build
-        run: npm run build
-        env:
-          # Served from https://<owner>.github.io/<repo>/
-          BASE_PATH: /${{ github.event.repository.name }}/
+      # Asset paths are relative (see vite.config.ts), so the build works at any URL.
+      - run: npm run build
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
