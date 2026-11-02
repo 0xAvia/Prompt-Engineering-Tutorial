@@ -2,7 +2,7 @@
 export const site = {
   name: "Prompt School",
   tagline: "Learn to write great prompts for Claude, hands-on.",
-  repo: "https://github.com/0xAvia/Prompt-Engineering-Tutorial",
+  repo: "https://github.com/0xAvia/Prompt-School",
   original: "https://github.com/anthropics/prompt-eng-interactive-tutorial",
   console: "https://platform.claude.com/",
   consoleKeys: "https://platform.claude.com/settings/keys",

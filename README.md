@@ -55,7 +55,7 @@ npm install
 npm run dev
 ```
 
-Then open the URL Vite prints (by default http://localhost:5173/Prompt-Engineering-Tutorial/).
+Then open the URL Vite prints (by default http://localhost:5173/).
 
 ## Record demo answers
 
@@ -72,7 +72,7 @@ This fills `src/content/demo-responses.json`; commit it. Recordings are keyed by
 1. In the repository's **Settings → Pages**, set **Source** to **GitHub Actions** (one time).
 2. Push to `main`. The workflow in `.github/workflows/deploy.yml` runs the tests, builds, and publishes to `https://<owner>.github.io/<repo>/`.
 
-The site uses hash-based URLs (`#/learn/...`), so deep links work on Pages without any server configuration. To host it at a different path, build with `BASE_PATH=/your/path/ npm run build`.
+The site uses hash-based URLs (`#/learn/...`) and relative asset paths, so the same build works on Pages, on a custom domain or in any subfolder, with no server configuration, and it keeps working if you rename the repository. To pin an absolute path instead, build with `BASE_PATH=/your/path/ npm run build`.
 
 ## Tests
 

@@ -72,6 +72,13 @@ test("every page renders without errors or sideways scrolling on a phone", async
   expect(errors).toEqual([]);
 });
 
+test("the built page only uses relative asset paths, so it works at any URL", async ({ request }) => {
+  // An absolute path like /Old-Repo-Name/assets/... 404s (a blank page) once the site moves or the repo is renamed.
+  const html = await (await request.get("./")).text();
+  expect(html).toContain('src="./assets/');
+  expect(html).not.toMatch(/(?:src|href)="\/(?!\/)/);
+});
+
 test("saving a key checks it with Anthropic and leaves demo mode", async ({ page }) => {
   await page.route("https://api.anthropic.com/v1/models/*", (route) =>
     route.fulfill({ status: 200, headers: { ...cors(), "content-type": "application/json" }, body: JSON.stringify({ id: "claude-haiku-5-5", type: "model", display_name: "Claude Haiku 5.5", created_at: "2026-01-01T00:00:00Z" }) }),

@@ -37,10 +37,11 @@ function cspMeta(): Plugin {
   };
 }
 
-// The site is served from https://<user>.github.io/Prompt-Engineering-Tutorial/
-// Override with BASE_PATH=/ for other hosts.
+// Relative asset paths, so the same build works at any URL: https://<owner>.github.io/<repo>/,
+// a custom domain, or a subfolder, and it keeps working if the repo is renamed. Hash routing
+// means the page is always the site folder's index.html. Set BASE_PATH to pin an absolute base.
 export default defineConfig({
-  base: process.env.BASE_PATH ?? "/Prompt-Engineering-Tutorial/",
+  base: process.env.BASE_PATH ?? "./",
   plugins: [react(), tailwindcss(), cspMeta()],
   // The editor and the Claude SDK are big, but they load only on lesson pages.
   build: { chunkSizeWarningLimit: 700 },
