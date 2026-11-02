@@ -59,7 +59,7 @@ export const ch10_3: Chapter = {
             title: "Grounded, cited answers",
             goal: md`
               The starting template just dumps the documents and question in. Improve it so that, for all three questions,
-              Claude **answers only from the documents**, **cites the document id in square brackets** (like \`[2]\`), and
+              Claude **answers only from the documents**, **cites the document index in square brackets** (like \`[2]\`), and
               **says it doesn't have the information** when the documents don't cover the question. Keep \`{DOCUMENTS}\` and
               \`{QUESTION}\` in your template.
             `,
@@ -108,7 +108,7 @@ export const ch10_3: Chapter = {
             ],
             hints: [
               "Wrap `{DOCUMENTS}` in `<documents>` tags and `{QUESTION}` in `<question>` tags, and put the question last.",
-              "Spell out the rules: answer only from the documents; cite the document id in square brackets after each fact, like [3].",
+              "Spell out the rules: answer only from the documents; cite the document index in square brackets after each fact, like [3].",
               "Give Claude an out: “If the documents don't contain the answer, say that you don't have that information.”",
             ],
             solution: {
@@ -117,7 +117,7 @@ export const ch10_3: Chapter = {
 {DOCUMENTS}
 </documents>
 
-Answer the customer's question using only the information in these documents. After each fact you use, cite the document's id in square brackets, like [3]. If the documents don't contain the answer, say that you don't have that information rather than guessing.
+Answer the customer's question using only the information in these documents. After each fact you use, cite the document's index in square brackets, like [3]. If the documents don't contain the answer, say that you don't have that information rather than guessing.
 
 <question>
 {QUESTION}

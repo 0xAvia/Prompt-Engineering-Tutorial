@@ -58,6 +58,11 @@ export const glossary: Record<string, GlossaryEntry> = {
     term: "Variable / placeholder",
     definition: "A blank in a prompt template, written in curly braces like {NAME}. It is replaced by real text before the prompt is sent.",
   },
+  "prompt-injection": {
+    term: "Prompt injection",
+    definition:
+      "When text your app puts into a prompt (an email, a web page, a user's message) contains instructions meant to hijack Claude. Mark outside text as data, and tell Claude not to follow instructions inside it.",
+  },
   hallucination: {
     term: "Hallucination",
     definition:
@@ -75,7 +80,12 @@ export const glossary: Record<string, GlossaryEntry> = {
   thinking: {
     term: "Thinking",
     definition:
-      "Reasoning Claude does before writing its answer. You can ask for it in the prompt (“think step by step in <thinking> tags”), and current models also have a built-in thinking mode.",
+      "Reasoning Claude does privately before it writes its answer. Current models decide for themselves how much to think; you control the depth with the effort setting.",
+  },
+  effort: {
+    term: "Effort",
+    definition:
+      "A setting (low, medium or high) for how hard Claude thinks before answering. Higher effort can give better answers on hard problems, but is slower and uses more tokens.",
   },
   "context-window": {
     term: "Context window",

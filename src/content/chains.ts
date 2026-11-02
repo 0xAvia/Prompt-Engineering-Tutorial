@@ -2,7 +2,10 @@
 
 export interface ChainStep {
   user: string;
-  /** "continue": a follow-up in the same conversation. "new": a fresh prompt with {PREVIOUS} filled in. */
+  /**
+   * "continue": a follow-up in the same conversation.
+   * "new": a fresh prompt; {PREVIOUS} is the last step's answer and {STEP1}, {STEP2}… are earlier answers.
+   */
   mode: "continue" | "new";
 }
 
@@ -21,12 +24,37 @@ export const CHAINS: Record<string, Chain> = {
       { user: "Please find replacements for all 'words' that are not real words. If all the words are real words, return the original list.", mode: "continue" },
     ],
   },
-  "improve-story": {
-    title: "Draft, then improve",
-    description: "Writing is rewriting. Step 2 asks Claude to improve its own first draft.",
+  "self-correct": {
+    title: "Draft, review, refine",
+    description: "The most common chain: write a draft, have Claude review it against explicit criteria, then rewrite it to fix what the review found.",
     steps: [
-      { user: "Write a three-sentence short story about a girl who likes to run.", mode: "new" },
-      { user: "Make the story better.", mode: "continue" },
+      { user: "Write a product description for a reusable water bottle aimed at hikers, in about 80 words.", mode: "new" },
+      {
+        user: `Review this product description against these criteria:
+1. Mentions at least one concrete feature (like capacity, weight or material)
+2. Speaks directly to hikers' needs
+3. Ends with a clear call to action
+4. No more than 80 words
+
+<draft>
+{STEP1}
+</draft>
+
+For each criterion, say "met" or "not met" with a one-line reason.`,
+        mode: "new",
+      },
+      {
+        user: `Rewrite the draft so it meets every criterion the review marked "not met", keeping what already works. Reply with only the new description.
+
+<draft>
+{STEP1}
+</draft>
+
+<review>
+{STEP2}
+</review>`,
+        mode: "new",
+      },
     ],
   },
   "names-pipeline": {

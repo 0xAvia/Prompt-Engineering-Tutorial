@@ -9,17 +9,18 @@ export interface ModelInfo {
   /** USD per million tokens (prompts up to 100K tokens for Haiku). */
   inputPrice: number;
   outputPrice: number;
-  /** Thinking config sent when a lesson does NOT ask for thinking (undefined = omit the field). */
-  thinkingOff: ThinkingConfigParam | undefined;
-  /** Thinking config sent when a lesson turns thinking on. */
-  thinkingOn: ThinkingConfigParam;
 }
 
-// Notes on the current API that shape these settings:
-// - Assistant "prefill" is rejected by all of these models, so we never send it.
-// - Sampling params (temperature etc.) are rejected, so answers vary run to run.
-// - Haiku 5.5 may turn thinking off at effort <= high. Sonnet 5.5 turns it off with
-//   "between_tools". Opus 5.5 cannot turn it off, so we omit the field and keep effort low.
+/**
+ * Every current model thinks adaptively: it decides how much to reason based on the
+ * task and the `effort` setting, and answers easy questions directly. We ask for a
+ * summary of that thinking so learners can peek at it.
+ *
+ * Other current-API facts that shape the course: assistant "prefill" is rejected, and
+ * sampling parameters like temperature are rejected, so answers vary run to run.
+ */
+export const THINKING: ThinkingConfigParam = { type: "adaptive", display: "summarized" };
+
 export const MODELS: ModelInfo[] = [
   {
     id: "claude-haiku-5-5",
@@ -27,8 +28,6 @@ export const MODELS: ModelInfo[] = [
     blurb: "Fast and very cheap. Perfect for practising, and the default for this course.",
     inputPrice: 0.1,
     outputPrice: 0.5,
-    thinkingOff: { type: "disabled" },
-    thinkingOn: { type: "adaptive", display: "summarized" },
   },
   {
     id: "claude-sonnet-5-5",
@@ -36,8 +35,6 @@ export const MODELS: ModelInfo[] = [
     blurb: "Smarter, still quick. Costs about 20× more than Haiku.",
     inputPrice: 2,
     outputPrice: 10,
-    thinkingOff: { type: "between_tools" },
-    thinkingOn: { type: "adaptive", display: "summarized" },
   },
   {
     id: "claude-opus-5-5",
@@ -45,8 +42,6 @@ export const MODELS: ModelInfo[] = [
     blurb: "The most capable of the three. Costs about 40× more than Haiku.",
     inputPrice: 4,
     outputPrice: 20,
-    thinkingOff: undefined,
-    thinkingOn: { type: "adaptive", display: "summarized" },
   },
 ];
 

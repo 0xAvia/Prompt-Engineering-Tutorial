@@ -22,7 +22,7 @@ function BlockView({ block }: { block: Block }) {
     case "playground":
       return <PromptPlayground example={block.example} />;
     case "compare":
-      return <Compare title={block.title} before={block.before} after={block.after} takeaway={block.takeaway} />;
+      return <Compare title={block.title} before={block.before} after={block.after} takeaway={block.takeaway} labels={block.labels} />;
     case "exercise":
       return <ExerciseCard exercise={block.exercise} />;
     case "custom":

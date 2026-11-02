@@ -109,14 +109,20 @@ Chapters are plain TypeScript data, so adding or editing a lesson doesn't touch 
 
 ## What changed from the original tutorial
 
-The original was written for Claude 3. A few techniques changed since then:
+The original was written for Claude 3, and Anthropic now says to follow its [Prompting best practices](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices) where the two differ. This course follows them:
 
-- **Prefill** ("speaking for Claude") is no longer accepted by current models, so Chapter 5 teaches steering the start of an answer with instructions instead, and mentions structured outputs.
+- **Thinking and effort.** Current models think before answering on their own. Chapter 6 teaches the effort setting and how to point Claude's thinking at what matters, instead of "think step by step" and reasoning written into the answer. Playgrounds use adaptive thinking and let learners change the effort level.
+- **Prefill** is no longer accepted, so Chapter 5 teaches steering the start of an answer with instructions, and demonstrates structured outputs (schema-guaranteed JSON).
+- **Explain why** (Chapter 2): giving the reason behind an instruction lets Claude generalize it.
+- **Say what you want, calmly** (Chapter 5): positive instructions, matching the prompt's style to the output, and no ALL-CAPS pressure language.
+- **Prompt injection and guardrails**: treating outside text as data (Chapter 4) and keeping a chatbot to its rules when users push back (Chapter 9).
+- **Long documents first, question last** (Chapter 8), and the nested `<document>` structure for retrieval (10.3).
+- **Self-correction chains** (10.1): draft → review against criteria → refine, plus when chaining is still worth it.
+- **Chapter 9's structure is a checklist, not a template**: start minimal and add elements only to fix problems you see.
+- **Success criteria and testing** are introduced in Chapter 1 instead of only at the end.
 - **Temperature** can't be changed on current models, so answers vary run to run. Graders are a little more tolerant, and the UI encourages re-running.
-- **Built-in thinking** is covered in Chapter 6 alongside "think step by step".
-- **Tool use** uses the API's real tool-calling instead of the simulated XML version.
+- **Tool use** uses the API's real tool calling instead of the simulated XML version.
 - The Chapter 8 Beyoncé question became answerable (her eighth album came out in 2024), so it was replaced with a question that's still a hallucination trap.
-- New: a retrieval sandbox (10.3) and a chapter on testing prompts with evals (10.4).
 
 ## Credits
 

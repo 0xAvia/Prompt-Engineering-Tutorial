@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { answerTag, endsWithLetter, letterAndName } from "../src/content/docs/emails";
+import { answerTag, categoryLine, letterAndName } from "../src/content/docs/emails";
 import { DOCS, retrieve } from "../src/content/retrieval";
 import { DB_SOLUTION, DB_TESTS, buildDbTools, initialDb, runCalculator, runDbTool } from "../src/content/tools";
 import { ANIMAL_WORDS, allPass, containsAny, doesNotHardcode, exactly, grade, minWords, wordCount } from "../src/lib/graders";
@@ -45,10 +45,12 @@ describe("email graders (chapters 6 & 7)", () => {
     expect(answerTag(["B"]).test("<thinking>…</thinking>\n<answer>B</answer>")).toBe(true);
     expect(answerTag(["B"]).test("<answer>(B)</answer>")).toBe(false);
   });
-  it("checks the last letter", () => {
-    expect(endsWithLetter(["C"]).test("The correct category is: C")).toBe(true);
-    expect(endsWithLetter(["C"]).test("The correct category is: C.\n")).toBe(true);
-    expect(endsWithLetter(["C"]).test("C) Billing question")).toBe(false);
+  it("checks the exact one-line category format", () => {
+    expect(categoryLine(["C"]).test("Category: C")).toBe(true);
+    expect(categoryLine(["C"]).test("  Category: C\n")).toBe(true);
+    expect(categoryLine(["A", "D"]).test("Category: D")).toBe(true);
+    expect(categoryLine(["C"]).test("Category: C (Billing question)")).toBe(false);
+    expect(categoryLine(["C"]).test("Category: B")).toBe(false);
   });
 });
 

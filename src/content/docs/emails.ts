@@ -61,6 +61,8 @@ export const letterAndName = (answers: string[]) =>
 export const answerTag = (answers: string[]) =>
   matches(new RegExp(answers.map((a) => `<answer>${a}</answer>`).join("|")), `Contains ${answers.map((a) => `<answer>${a}</answer>`).join(" or ")}`);
 
-/** The answer ends with the category letter. */
-export const endsWithLetter = (answers: string[]) =>
-  matches(new RegExp(`(${answers.join("|")})[\\s.]*$`), `The very last letter is ${answers.join(" or ")}`);
+/** The whole answer is exactly one line like "Category: B". */
+export const categoryLine = (answers: string[]) => {
+  const re = new RegExp(`^Category: (${answers.join("|")})$`);
+  return { label: `Is exactly “Category: ${answers.join("” or “Category: ")}”, and nothing else`, test: (t: string) => re.test(t.trim()) };
+};

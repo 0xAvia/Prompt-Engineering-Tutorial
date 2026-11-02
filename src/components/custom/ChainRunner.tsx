@@ -3,6 +3,7 @@ import { useRef, useState } from "react";
 import { CHAINS } from "../../content/chains";
 import type { PromptSpec, Turn } from "../../content/types";
 import { friendlyError, isAbort, runPrompt } from "../../lib/claude";
+import { fillTemplate } from "../../lib/template";
 import { getAppState, useAppState } from "../../lib/storage";
 import { btn, openKeyDialog } from "../../lib/ui";
 import type { RunState } from "../../lib/useRunner";
@@ -31,21 +32,23 @@ export function ChainRunner({ preset }: { preset: string }) {
     const { model } = getAppState();
     setStates(chain.steps.map(() => IDLE));
     const history: Turn[] = [];
+    const outputs: Record<string, string> = {};
     let previous = "";
     for (let i = 0; i < chain.steps.length; i++) {
       const step = chain.steps[i];
       const spec: PromptSpec =
         step.mode === "continue"
           ? { history: [...history], user: prompts[i] }
-          : { user: prompts[i], variables: { PREVIOUS: previous } };
+          : { user: prompts[i], variables: { ...outputs, PREVIOUS: previous } };
       if (step.mode === "new") history.length = 0;
       setState(i, { status: "running", text: "", thinking: "", source: "live" });
       const t0 = performance.now();
       try {
         const result = await runPrompt(spec, { apiKey, modelId: model, signal: c.signal, onText: (text) => setState(i, { text }) });
         setState(i, { status: "done", text: result.text, result, elapsedMs: performance.now() - t0 });
-        history.push({ role: "user", content: step.mode === "new" ? prompts[i].replaceAll("{PREVIOUS}", previous) : prompts[i] });
+        history.push({ role: "user", content: step.mode === "new" ? fillTemplate(prompts[i], { ...outputs, PREVIOUS: previous }) : prompts[i] });
         history.push({ role: "assistant", content: result.text });
+        outputs[`STEP${i + 1}`] = result.text;
         previous = result.text;
       } catch (e) {
         if (isAbort(e) || c.signal.aborted) setState(i, { status: "stopped" });
@@ -69,7 +72,7 @@ export function ChainRunner({ preset }: { preset: string }) {
             {i > 0 && (
               <div className="flex items-center gap-2 py-1 pl-3 text-xs font-medium text-muted">
                 <ArrowDown className="size-4 text-accent" aria-hidden />
-                {step.mode === "continue" ? "Continues the same conversation" : "Step " + i + "'s answer goes into {PREVIOUS}"}
+                {step.mode === "continue" ? "Continues the same conversation" : stepInputs(prompts[i])}
               </div>
             )}
             <div className="space-y-3 rounded-xl border border-line-strong p-3.5">
@@ -108,4 +111,10 @@ export function ChainRunner({ preset }: { preset: string }) {
       </div>
     </div>
   );
+}
+
+/** Describe which earlier answers a step's prompt uses. */
+function stepInputs(prompt: string): string {
+  const used = [...new Set([...prompt.matchAll(/\{(STEP(\d+)|PREVIOUS)\}/g)].map((m) => (m[2] ? `step ${m[2]}` : "the previous step")))];
+  return used.length ? `A new prompt that uses the answer from ${used.join(" and ")}` : "A new prompt";
 }

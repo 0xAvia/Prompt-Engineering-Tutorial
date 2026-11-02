@@ -9,12 +9,13 @@ export const ch05: Chapter = {
   number: "5",
   title: "Formatting Output",
   level: "intermediate",
-  summary: "Get answers in exactly the shape you need: XML tags, JSON, and steering how Claude starts its reply.",
+  summary: "Get answers in exactly the shape you need: XML tags, JSON and structured outputs, and instructions that say what you want.",
   minutes: 20,
   goals: [
     "Ask Claude to wrap its answer in XML tags so it's easy to extract",
-    "Request JSON output with specific keys",
+    "Get JSON, and guarantee it with structured outputs",
     "Steer the start of Claude's reply with instructions",
+    "Write formatting instructions that say what you want, calmly",
   ],
   sections: [
     {
@@ -67,13 +68,34 @@ export const ch05: Chapter = {
           },
         },
         {
-          kind: "callout",
-          tone: "tip",
+          kind: "text",
           md: md`
-            When you build a real app and *need* valid JSON every time, the API has a **structured outputs** feature
-            that guarantees the answer matches a schema you define. For learning and quick tasks, asking clearly works
-            very well.
+            Asking works well, but for an app that *must* get valid JSON every time, the API has a feature called
+            **structured outputs**: you give it a JSON schema (a description of the exact keys and types you want), and
+            the answer is guaranteed to match it. No parsing surprises, no stray sentences. This playground has it
+            switched on; open the schema to see what it enforces.
           `,
+        },
+        {
+          kind: "playground",
+          example: {
+            id: "5-structured",
+            title: "Structured outputs: JSON, guaranteed",
+            prompt: {
+              user: "Please write a haiku about {ANIMAL}.",
+              variables: { ANIMAL: "Cat" },
+              outputSchema: {
+                type: "object",
+                properties: {
+                  first_line: { type: "string" },
+                  second_line: { type: "string" },
+                  third_line: { type: "string" },
+                },
+                required: ["first_line", "second_line", "third_line"],
+                additionalProperties: false,
+              },
+            },
+          },
         },
         {
           kind: "text",
@@ -131,6 +153,49 @@ export const ch05: Chapter = {
           md: md`
             If you call the API from code, you can pass a closing tag like \`</haiku>\` as a **stop sequence**: Claude stops
             writing the moment it produces it. That skips any closing remarks and saves a little time and money.
+          `,
+        },
+      ],
+    },
+    {
+      id: "calm-and-positive",
+      title: "Say what you want, calmly",
+      blocks: [
+        {
+          kind: "text",
+          md: md`
+            Three habits make formatting instructions work much better.
+
+            **Say what to do, not what not to do.** “No markdown” tells Claude what to avoid but not what you want
+            instead. Describe the result you're after.
+          `,
+        },
+        {
+          kind: "compare",
+          before: { id: "5-positive-plain", prompt: { user: "Explain how a rainbow forms. Do not use markdown." } },
+          after: {
+            id: "5-positive-described",
+            prompt: { user: "Explain how a rainbow forms, in two or three smoothly flowing paragraphs of plain prose, like a short magazine article." },
+          },
+          takeaway: "Describing the target (flowing prose, a few paragraphs) gives Claude something to aim for, not just something to avoid.",
+        },
+        {
+          kind: "text",
+          md: md`
+            **Match your prompt's style to the answer you want.** Claude picks up on the style of your prompt. A prompt
+            full of headings and bullet points tends to get headings and bullet points back; a prompt written in plain
+            sentences tends to get plain sentences.
+          `,
+        },
+        {
+          kind: "callout",
+          tone: "warning",
+          title: "Don't shout",
+          md: md`
+            Older prompts often used capitals and alarm words: “CRITICAL: you MUST…”, “NEVER EVER…”. Older models needed
+            the emphasis. Current models follow plain instructions closely, and shouting can make them overdo it: applying
+            the rule where it doesn't fit, or fixating on it. State each instruction once, calmly, and give the reason
+            (Chapter 2).
           `,
         },
       ],
@@ -216,10 +281,42 @@ export const ch05: Chapter = {
             takeaway: "Multiple placeholders + tagged output: this pattern powers a huge number of real Claude apps.",
           },
         },
+        {
+          kind: "exercise",
+          exercise: {
+            id: "5.4",
+            title: "Calm it down",
+            goal: md`
+              This prompt shouts a list of things *not* to do. Rewrite it without capitals, by **describing the format you
+              want** instead. Claude's answer should be plain prose: no headings, no bullet points, no bold.
+            `,
+            start: { user: "Explain how a rainbow forms. DO NOT USE MARKDOWN!!! NO BULLET POINTS. NO HEADINGS. NO BOLD." },
+            editable: ["user"],
+            promptCriteria: [{ label: "No ALL-CAPS shouting in your prompt", test: (t) => !/\b[A-Z]{4,}\b/.test(t) }],
+            criteria: [
+              contains("light", { label: "Explains the rainbow (mentions light)" }),
+              { label: "No headings", test: (t) => !/^\s{0,3}#{1,6}\s/m.test(t) },
+              { label: "No bullet points or numbered lists", test: (t) => !/^\s*([-*•]|\d+[.)])\s/m.test(t) },
+              { label: "No bold text", test: (t) => !/\*\*[^*]+\*\*/.test(t) },
+            ],
+            hints: [
+              "Delete the shouty sentence and describe the result you want instead: what should the answer look like?",
+              "Try something like “…in two or three flowing paragraphs of plain prose, like a short magazine article.”",
+            ],
+            solution: { user: "Explain how a rainbow forms. Write it as two or three flowing paragraphs of plain prose, like a short magazine article." },
+            takeaway: "Calm, positive, specific: the instruction got shorter and the result got more reliable.",
+          },
+        },
       ],
     },
   ],
   quiz: [
+    {
+      q: "Which formatting instruction is likely to work best?",
+      options: ["“DO NOT USE MARKDOWN!!!”", "“No markdown.”", "“Write two or three flowing paragraphs of plain prose.”", "“Markdown is forbidden.”"],
+      answer: 2,
+      explain: "Describe the result you want instead of listing what to avoid, and skip the shouting.",
+    },
     {
       q: "Why ask Claude to put its answer in XML tags like `<haiku>`?",
       options: [

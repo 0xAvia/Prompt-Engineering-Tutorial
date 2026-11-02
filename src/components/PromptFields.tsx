@@ -1,6 +1,6 @@
-import { Brain, ChevronRight, Lock, Plus, Trash2 } from "lucide-react";
+import { Braces, Brain, ChevronRight, Lock, Plus, Trash2 } from "lucide-react";
 import { useState } from "react";
-import type { EditableField, PromptSpec, Turn } from "../content/types";
+import type { EditableField, Effort, PromptSpec, Turn } from "../content/types";
 import { findVariables } from "../lib/template";
 import { FilledPrompt } from "./HighlightedText";
 import { PromptEditor } from "./PromptEditor";
@@ -11,10 +11,12 @@ interface Props {
   editable: EditableField[];
   /** Show the system prompt box even if the example has none. */
   showSystem?: boolean;
-  /** Free playground: add/remove turns and toggle thinking. */
+  /** Free playground: add/remove turns and choose the effort level. */
   freeform?: boolean;
-  /** Show the thinking switch. */
-  showThinking?: boolean;
+  /** Show the effort selector. */
+  showEffort?: boolean;
+  /** Placeholders filled in per test case by a multi-input exercise. */
+  caseVars?: string[];
   idPrefix: string;
 }
 
@@ -46,7 +48,7 @@ function EditorBox({ locked, tone = "default", children }: { locked?: boolean; t
   );
 }
 
-export function PromptFields({ spec, onChange, editable, showSystem, freeform, showThinking, idPrefix }: Props) {
+export function PromptFields({ spec, onChange, editable, showSystem, freeform, showEffort, caseVars, idPrefix }: Props) {
   const can = (f: EditableField) => editable.includes(f);
   const history = spec.history ?? [];
   const vars = findVariables(spec.system, spec.user, ...history.map((t) => t.content));
@@ -146,7 +148,9 @@ export function PromptFields({ spec, onChange, editable, showSystem, freeform, s
               return (
                 <label key={name} className="block" htmlFor={`${idPrefix}-var-${name}`}>
                   <span className="tok-var mb-1 inline-block px-1 font-mono text-xs">{`{${name}}`}</span>
-                  {!has && !can("variables") && !freeform ? (
+                  {caseVars?.includes(name) ? (
+                    <span className="ml-2 text-xs text-muted">Filled in from each test input below when you run the exercise.</span>
+                  ) : !has && !can("variables") && !freeform ? (
                     <span className="ml-2 text-xs text-warning">No value for this placeholder: it will be sent as written.</span>
                   ) : (
                     <textarea
@@ -192,25 +196,54 @@ export function PromptFields({ spec, onChange, editable, showSystem, freeform, s
         </div>
       )}
 
-      {(showThinking || freeform) && (
-        <label className="flex cursor-pointer items-center gap-3 rounded-xl border border-line bg-surface-2/50 px-3.5 py-2.5">
-          <input
-            type="checkbox"
-            className="peer sr-only"
-            checked={!!spec.thinking}
-            onChange={(e) => onChange({ ...spec, thinking: e.target.checked })}
-          />
-          <span
-            aria-hidden
-            className="relative h-5 w-9 shrink-0 rounded-full bg-line-strong transition-colors peer-checked:bg-accent peer-focus-visible:ring-2 peer-focus-visible:ring-accent after:absolute after:left-0.5 after:top-0.5 after:size-4 after:rounded-full after:bg-white after:transition-transform peer-checked:after:translate-x-4"
-          />
-          <Brain className="size-4 text-muted" aria-hidden />
-          <span className="text-sm">
-            <span className="font-medium">Built-in thinking</span>
-            <span className="text-muted"> — let Claude reason privately before it answers</span>
-          </span>
-        </label>
+      {spec.outputSchema && (
+        <details className="group rounded-xl border border-tag/30 bg-tag-bg/40 px-3.5 py-2.5">
+          <summary className="flex cursor-pointer list-none items-center gap-2 text-sm">
+            <Braces className="size-4 text-tag" aria-hidden />
+            <span>
+              <span className="font-medium">Structured output is on:</span>{" "}
+              <span className="text-muted">the API guarantees the answer matches this JSON schema</span>
+            </span>
+            <ChevronRight className="ml-auto size-4 text-faint transition-transform group-open:rotate-90" aria-hidden />
+          </summary>
+          <pre className="mt-2 overflow-x-auto font-mono text-[0.78rem] leading-relaxed">{JSON.stringify(spec.outputSchema, null, 2)}</pre>
+        </details>
       )}
+
+      {(showEffort || freeform) && <EffortPicker value={spec.effort ?? "low"} onChange={(effort) => onChange({ ...spec, effort })} />}
+    </div>
+  );
+}
+
+const EFFORTS: { value: Effort; label: string; hint: string }[] = [
+  { value: "low", label: "Low", hint: "fast and cheap; fine for simple tasks" },
+  { value: "medium", label: "Medium", hint: "thinks more on harder problems" },
+  { value: "high", label: "High", hint: "most thorough; slower and uses more tokens" },
+];
+
+/** How hard Claude thinks before answering (the API's `effort` setting). */
+function EffortPicker({ value, onChange }: { value: Effort; onChange: (e: Effort) => void }) {
+  const current = EFFORTS.find((e) => e.value === value)!;
+  return (
+    <div className="flex flex-wrap items-center gap-x-3 gap-y-2 rounded-xl border border-line bg-surface-2/50 px-3.5 py-2.5">
+      <span className="flex items-center gap-2 text-sm font-medium">
+        <Brain className="size-4 text-muted" aria-hidden /> Effort
+      </span>
+      <div className="inline-flex rounded-lg border border-line-strong bg-surface p-0.5" role="radiogroup" aria-label="Effort">
+        {EFFORTS.map((e) => (
+          <button
+            key={e.value}
+            type="button"
+            role="radio"
+            aria-checked={value === e.value}
+            onClick={() => onChange(e.value)}
+            className={`rounded-md px-2.5 py-1 text-xs font-semibold transition-colors ${value === e.value ? "bg-accent text-on-accent" : "text-muted hover:text-ink"}`}
+          >
+            {e.label}
+          </button>
+        ))}
+      </div>
+      <span className="text-xs text-muted">How hard Claude thinks before answering: {current.hint}.</span>
     </div>
   );
 }

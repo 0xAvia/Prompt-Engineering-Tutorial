@@ -4,140 +4,139 @@ import { CATEGORY_LIST, answerTag, emailCases, letterAndName } from "../docs/ema
 import type { Chapter } from "../types";
 
 const REVIEW = "This movie blew my mind with its freshness and originality. In totally unrelated news, I have been living under a rock since the year 1900.";
-const ACTOR = "Name a famous movie starring an actor who was born in the year 1956.";
+
+const SEATS =
+  "Four friends (Ana, Ben, Cara and Dev) sit in a row of four seats numbered 1 to 4. Dev sits in seat 1. Ben is not at either end. Cara sits directly to the right of Ana. Who sits in each seat?";
+
+const SEVENS = "How many times does the digit 7 appear when you write out every whole number from 1 to 100?";
 
 export const ch06: Chapter = {
   id: "thinking-step-by-step",
   number: "6",
-  title: "Thinking Step by Step",
+  title: "Letting Claude Think",
   level: "intermediate",
-  summary: "Give Claude room to reason before it answers, either in the prompt or with built-in thinking.",
+  summary: "Claude reasons before it answers. Control how hard it thinks, point that thinking at what matters, and make answers you can check.",
   minutes: 20,
   goals: [
-    "Ask Claude to reason out loud before answering, using tags",
-    "Notice how the order of options can sway an answer",
-    "Use Claude's built-in thinking mode and know when it helps",
+    "Explain Claude's built-in thinking and peek at a summary of it",
+    "Use the effort setting to trade speed and cost for thoroughness",
+    "Tell Claude what to consider, and ask for answers you can check",
   ],
   sections: [
     {
-      id: "why-think",
-      title: "Thinking first leads to better answers",
+      id: "built-in",
+      title: "Claude thinks before it answers",
       blocks: [
         {
           kind: "text",
           md: md`
-            If someone woke you up and fired a tricky question at you, you'd do better if you could think it through
-            first. Claude is the same: **giving it space to reason before it commits to an answer** often makes it more
-            accurate, especially on tasks with several steps or a subtle twist.
+            If someone fired a tricky question at you, you'd do better with a moment to think it through. Current Claude
+            models have that moment built in: before writing a reply, Claude can **[think](#g/thinking)** privately, and
+            it decides for itself how much. Easy questions get an instant answer; puzzles get real reasoning.
 
-            Here's a subtle one. The review sounds positive, but the second sentence is sarcastic (if you've been
-            “living under a rock since 1900”, everything seems fresh). Does Claude catch it?
+            Run this puzzle, then open **“What Claude was thinking”** in the answer to see a summary of the reasoning.
           `,
         },
-        {
-          kind: "compare",
-          before: { id: "6-review-plain", prompt: { user: `Is this movie review sentiment positive or negative?\n\n${REVIEW}` } },
-          after: {
-            id: "6-review-think",
-            prompt: {
-              system: "You are a savvy reader of movie reviews.",
-              user: `Is this review sentiment positive or negative? First, write the best arguments for each side in <positive-argument> and <negative-argument> XML tags, then answer.\n\n${REVIEW}`,
-            },
-          },
-          takeaway: "Spelling out *how* to think (argue both sides, then decide) helps Claude weigh the clues instead of reacting to the first sentence.",
-        },
-        {
-          kind: "callout",
-          tone: "warning",
-          title: "Thinking only counts if it happens",
-          md: md`
-            Writing “think carefully, but only give me the answer” in a prompt doesn't make Claude think. The reasoning
-            has to actually be **written out** (in the response, or with built-in thinking, below). Ask for the reasoning
-            in tags like \`<thinking>\` so it's easy to separate from the final answer.
-          `,
-        },
-      ],
-    },
-    {
-      id: "order",
-      title: "Order can sway the answer",
-      blocks: [
-        {
-          kind: "text",
-          md: md`
-            Claude can be sensitive to **the order you list options in**. On borderline questions like this one,
-            swapping “positive or negative” for “negative or positive” can tip the verdict. A tendency to favour the
-            second option has been observed in language models. Run this a few times and compare with the “After”
-            version above.
-          `,
-        },
-        {
-          kind: "playground",
-          example: {
-            id: "6-review-swapped",
-            title: "Same task, options swapped",
-            prompt: {
-              system: "You are a savvy reader of movie reviews.",
-              user: `Is this review sentiment negative or positive? First write the best arguments for each side in <negative-argument> and <positive-argument> XML tags, then answer.\n\n${REVIEW}`,
-            },
-          },
-        },
-      ],
-    },
-    {
-      id: "brainstorm",
-      title: "Brainstorm, then answer",
-      blocks: [
-        {
-          kind: "text",
-          md: md`
-            Letting Claude think can turn a wrong answer into a right one. Questions that combine two facts (“an actor
-            born in 1956” *and* “a famous movie”) are easy to get subtly wrong in one shot. Asking Claude to brainstorm
-            first lets it check its own facts.
-          `,
-        },
-        {
-          kind: "compare",
-          before: { id: "6-actor-plain", prompt: { user: ACTOR } },
-          after: {
-            id: "6-actor-brainstorm",
-            prompt: { user: `${ACTOR} First brainstorm about some actors and their birth years in <brainstorm> tags, then give your answer.` },
-          },
-          takeaway: "Check the answers: Tom Hanks, Mel Gibson and Bryan Cranston were all born in 1956.",
-        },
-      ],
-    },
-    {
-      id: "built-in-thinking",
-      title: "Built-in thinking",
-      blocks: [
+        { kind: "playground", example: { id: "6-seats", title: "A seating puzzle", prompt: { user: SEATS, effort: "low" } } },
         {
           kind: "callout",
           tone: "changed",
           md: md`
-            When the original tutorial was written, “think step by step” in the prompt was the only option. Current Claude
-            models also have **built-in [thinking](#g/thinking)**: switch it on and Claude reasons privately before it
-            answers, without you asking. You can peek at a summary of that reasoning.
+            The original tutorial taught you to write “think step by step” and to ask for the reasoning inside
+            \`<thinking>\` tags in the answer. Models back then couldn't think any other way. Current models think on
+            their own, so that instruction is mostly redundant. And asking Claude to write out its full reasoning in the
+            answer costs extra tokens; some larger models may even decline requests to reproduce their reasoning.
+            The tools in this chapter replace it.
           `,
         },
+      ],
+    },
+    {
+      id: "effort",
+      title: "Effort: how hard Claude thinks",
+      blocks: [
         {
           kind: "text",
           md: md`
-            Turn on **Built-in thinking** below, run it, then open **“What Claude was thinking”** in the answer.
+            You control the depth of thinking with a setting called **[effort](#g/effort)**: low, medium or high.
+            Higher effort means more thinking, which usually means better answers on hard problems, but also slower
+            replies and more tokens to pay for. Telling Claude in the prompt to “think harder” or “don't overthink” is
+            much less reliable than changing the setting.
 
-            | | Thinking in the prompt | Built-in thinking |
-            |---|---|---|
-            | How | “Think step by step in \`<thinking>\` tags” | A switch (an API setting) |
-            | You see | The full reasoning, in the answer | A summary, kept separate |
-            | Good for | Reasoning you want to read, check or show users | Hard problems, with no prompt changes |
-            | Cost | Reasoning counts as output tokens | Thinking counts as output tokens too |
-
-            Both cost a bit more and take a bit longer, so save them for tasks that need it.
+            Run both versions below and compare the **token count and time** in each answer's header, and how long the
+            thinking summary is.
           `,
         },
         {
-          kind: "playground",
-          example: { id: "6-actor-thinking", title: "Try built-in thinking", prompt: { user: ACTOR, thinking: false } },
+          kind: "compare",
+          labels: ["Option A", "Option B"],
+          before: { id: "6-sevens-low", title: "Low effort", prompt: { user: SEVENS, effort: "low" } },
+          after: { id: "6-sevens-high", title: "High effort", prompt: { user: SEVENS, effort: "high" } },
+          takeaway:
+            "The answer is 20 (ten in the units place, ten in the seventies). Low effort is plenty for most simple tasks. Raise it when getting it right matters more than speed and cost.",
+        },
+        {
+          kind: "callout",
+          tone: "tip",
+          md: md`
+            This course runs at **low** effort by default to keep things fast and cheap. Wherever you see the **Effort**
+            selector, you can turn it up and watch what changes.
+          `,
+        },
+      ],
+    },
+    {
+      id: "what-to-consider",
+      title: "Point the thinking at what matters",
+      blocks: [
+        {
+          kind: "text",
+          md: md`
+            Effort controls *how much* Claude thinks. Your prompt controls *what about*. If you know where the trap is,
+            say so. This review sounds glowing, but the second sentence is sarcastic: if you've been “living under a rock
+            since 1900”, everything seems fresh. A hint about what to look for helps Claude weigh the clues instead of
+            reacting to the first sentence.
+          `,
+        },
+        {
+          kind: "compare",
+          before: { id: "6-review-plain", prompt: { user: `Is this movie review sentiment positive or negative?\n\n<review>\n${REVIEW}\n</review>` } },
+          after: {
+            id: "6-review-guided",
+            prompt: {
+              system: "You are a savvy reader of movie reviews.",
+              user: `Is this movie review sentiment positive or negative? Reviewers are sometimes sarcastic, so consider whether each sentence is meant sincerely before you decide.\n\n<review>\n${REVIEW}\n</review>`,
+            },
+          },
+          takeaway: "Telling Claude *what to consider* (sarcasm, both sides, a likely mistake) is the modern way to guide its reasoning.",
+        },
+      ],
+    },
+    {
+      id: "checkable",
+      title: "Make answers you can check",
+      blocks: [
+        {
+          kind: "text",
+          md: md`
+            Sometimes you need to know *why* Claude gave an answer, so you can trust it. Instead of asking for all its
+            reasoning, ask for **the answer plus the key facts it relied on**. That's short, and it's exactly what you need
+            to verify it.
+
+            Questions that combine two facts (“an actor born in 1956” *and* “a famous movie”) are easy to get subtly wrong.
+            Asking for the supporting facts makes a wrong answer easy to spot.
+          `,
+        },
+        {
+          kind: "compare",
+          before: { id: "6-actor-plain", prompt: { user: "Name a famous movie starring an actor who was born in the year 1956." } },
+          after: {
+            id: "6-actor-checkable",
+            prompt: {
+              user: "Name a famous movie starring an actor who was born in the year 1956. Give the movie, then the actor and their exact date of birth, so I can check it.",
+            },
+          },
+          takeaway: "Now you can check it: Tom Hanks, Mel Gibson and Bryan Cranston were all born in 1956.",
         },
       ],
     },
@@ -148,8 +147,8 @@ export const ch06: Chapter = {
         {
           kind: "text",
           md: md`
-            These two exercises run your prompt template **once for each of four customer emails** and check every
-            answer. The emails go into the \`{email}\` placeholder. The categories are:
+            These two exercises run your prompt **once for each of four customer emails** and check every answer. The
+            emails go into the \`{email}\` placeholder. The categories are:
 
             - **(A)** Pre-sale question
             - **(B)** Broken or defective item
@@ -163,22 +162,22 @@ export const ch06: Chapter = {
             id: "6.1",
             title: "Classify the emails",
             goal: md`
-              The starting prompt is nonsense (green or blue?). Rewrite it so Claude classifies each email into the
-              right category and answers with **the letter in parentheses plus the category name**, like
-              “(B) Broken or defective item”. Keep the \`{email}\` placeholder in your prompt.
+              The starting prompt is nonsense (green or blue?). Rewrite it so Claude puts each email in the right category
+              and answers with **the letter in parentheses plus the category name**, like “(B) Broken or defective item”.
+              Keep the \`{email}\` placeholder in your prompt.
             `,
-            start: { user: "Please classify this email as either green or blue: {email}", thinking: false },
+            start: { user: "Please classify this email as either green or blue: {email}", effort: "low" },
             editable: ["user"],
             promptCriteria: [usesVariable("email")],
             cases: emailCases(letterAndName),
             hints: [
               "Claude can't know your categories unless you list them. Put them in the prompt, ideally inside `<categories>` tags.",
-              "Ask for the classification and **only** the classification, in the exact format “(B) Broken or defective item”, with no preamble.",
-              "Email 2 is ambiguous: either (A) or (D) counts. If others are misclassified, try asking Claude to think it through first, in `<thinking>` tags or with built-in thinking, before giving the category.",
+              "Ask for the classification and nothing else, in the exact format “(B) Broken or defective item”.",
+              "Email 2 is ambiguous: either (A) or (D) counts. If others are misclassified, explain the tricky boundary (what counts as “Other”?), or try medium effort.",
             ],
             solution: {
-              user: `Please classify this email into one of the following categories:\n\n<categories>\n${CATEGORY_LIST}\n</categories>\n\n<email>\n{email}\n</email>\n\nAnswer with only the category letter in parentheses followed by the full category name, for example "(B) Broken or defective item". Do not include any other words.`,
-              thinking: false,
+              user: `Please classify this email into one of the following categories:\n\n<categories>\n${CATEGORY_LIST}\n</categories>\n\n<email>\n{email}\n</email>\n\nAnswer with only the category letter in parentheses followed by the full category name, for example "(B) Broken or defective item".`,
+              effort: "low",
             },
             takeaway: "Listing the options, wrapping the input in tags and pinning down the answer format turned a vague prompt into a reliable classifier.",
           },
@@ -187,25 +186,25 @@ export const ch06: Chapter = {
           kind: "exercise",
           exercise: {
             id: "6.2",
-            title: "Format the classification",
+            title: "A checkable classification",
             goal: md`
-              Now change the output: Claude should put **just the letter** of the category inside \`<answer>\` tags,
-              for example \`<answer>B</answer>\`. It may think or explain before that, as long as the tag is there.
+              Now make each answer easy to check *and* easy for a program to read: a **one-sentence reason**, then **just
+              the letter** inside \`<answer>\` tags, for example \`<answer>B</answer>\`.
             `,
-            start: { user: "Please classify this email as either green or blue: {email}", thinking: false },
+            start: { user: "Please classify this email as either green or blue: {email}", effort: "low" },
             editable: ["user"],
             promptCriteria: [usesVariable("email")],
             cases: emailCases(answerTag),
             hints: [
               "Start from your 6.1 solution and change the output instructions.",
-              "Show the exact format you want: “Put only the letter in <answer></answer> tags, for example <answer>B</answer>.”",
-              "Asking Claude to reason in `<thinking>` tags *before* the `<answer>` tag often fixes misclassifications.",
+              "Show the exact format you want: “Give a one-sentence reason, then only the letter in <answer></answer> tags, for example <answer>B</answer>.”",
+              "If an email is misclassified, read the reason Claude gave: it usually shows which category description needs to be clearer.",
             ],
             solution: {
-              user: `Please classify this email into one of the following categories:\n\n<categories>\n${CATEGORY_LIST}\n</categories>\n\n<email>\n{email}\n</email>\n\nFirst think about which category fits best in <thinking> tags. Then write only the category letter inside <answer></answer> tags, for example <answer>B</answer>.`,
-              thinking: false,
+              user: `Please classify this email into one of the following categories:\n\n<categories>\n${CATEGORY_LIST}\n</categories>\n\n<email>\n{email}\n</email>\n\nGive a one-sentence reason for your choice. Then write only the category letter inside <answer></answer> tags, for example <answer>B</answer>.`,
+              effort: "low",
             },
-            takeaway: "Reasoning first, then a tagged answer: you get better accuracy *and* an answer a program can extract.",
+            takeaway: "A short reason you can read, plus a tagged answer a program can read: the best of both.",
           },
         },
       ],
@@ -213,27 +212,27 @@ export const ch06: Chapter = {
   ],
   quiz: [
     {
-      q: "You write: “Think about this carefully, but only output the final answer.” Does Claude get the benefit of thinking?",
-      options: ["Yes, it thinks silently", "No: reasoning only helps when it's actually written out (or built-in thinking is on)", "Only on big models", "Only if you say please"],
+      q: "With current models, what's the most reliable way to make Claude think harder about a difficult problem?",
+      options: ["Write “THINK STEP BY STEP” in capitals", "Raise the effort setting", "Ask it to write out all its reasoning in the answer", "Repeat the question twice"],
       answer: 1,
-      explain: "Thinking has to happen somewhere: in the visible response, or in built-in thinking.",
+      explain: "Effort is the control for how much Claude thinks. Prompt wording like “think harder” is much less reliable.",
     },
     {
-      q: "Why put Claude's reasoning in `<thinking>` tags?",
-      options: ["It's required by the API", "It makes the reasoning easy to separate from the final answer", "It makes Claude faster", "Claude can't reason without tags"],
-      answer: 1,
-      explain: "Tags let you (or your code) read the reasoning and the answer separately.",
-    },
-    {
-      q: "Which is true about built-in thinking?",
+      q: "You need to check how Claude reached an answer. What's the best request?",
       options: [
-        "It's free",
-        "You must also write “think step by step”",
-        "It's a setting that lets Claude reason before answering, and its tokens are billed as output",
-        "It replaces the system prompt",
+        "“Show me your complete internal reasoning”",
+        "“Give the answer, then the key facts you relied on”",
+        "“Answer instantly without thinking”",
+        "There's no way to check",
       ],
-      answer: 2,
-      explain: "Built-in thinking is switched on with an API setting. Thinking tokens cost the same as output tokens, so use it where it helps.",
+      answer: 1,
+      explain: "The answer plus its supporting facts is short and exactly what you need to verify it.",
+    },
+    {
+      q: "Why not run everything at high effort?",
+      options: ["High effort is less accurate", "It's slower and uses more tokens, which cost money", "It's only for Opus", "It turns thinking off"],
+      answer: 1,
+      explain: "Thinking tokens are billed like output tokens. Use the lowest effort that gives good results for the task.",
     },
   ],
 };

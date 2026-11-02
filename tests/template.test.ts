@@ -38,10 +38,24 @@ describe("request building", () => {
     expect(p.messages.at(-1)!.role).toBe("user");
   });
 
-  it("turns thinking off on Haiku and omits it on Opus", () => {
-    expect(toParams(resolveRequest({ user: "Hi" }, "claude-haiku-5-5")).thinking).toEqual({ type: "disabled" });
-    expect(toParams(resolveRequest({ user: "Hi" }, "claude-opus-5-5"))).not.toHaveProperty("thinking");
-    expect(toParams(resolveRequest({ user: "Hi", thinking: true }, "claude-opus-5-5")).thinking).toEqual({ type: "adaptive", display: "summarized" });
+  it("always uses adaptive thinking, with effort defaulting to low", () => {
+    for (const model of ["claude-haiku-5-5", "claude-sonnet-5-5", "claude-opus-5-5"]) {
+      const p = toParams(resolveRequest({ user: "Hi" }, model));
+      expect(p.thinking).toEqual({ type: "adaptive", display: "summarized" });
+      expect(p.output_config).toEqual({ effort: "low" });
+    }
+  });
+
+  it("leaves more room for thinking at higher effort", () => {
+    const low = resolveRequest({ user: "Hi" }, "claude-haiku-5-5").maxTokens;
+    const high = resolveRequest({ user: "Hi", effort: "high" }, "claude-haiku-5-5").maxTokens;
+    expect(high).toBeGreaterThan(low);
+  });
+
+  it("adds a JSON schema as structured output", () => {
+    const schema = { type: "object", properties: { a: { type: "string" } }, required: ["a"], additionalProperties: false };
+    const p = toParams(resolveRequest({ user: "Hi", outputSchema: schema, effort: "medium" }, "claude-haiku-5-5"));
+    expect(p.output_config).toEqual({ effort: "medium", format: { type: "json_schema", schema } });
   });
 
   it("validates empty messages and alternation", () => {

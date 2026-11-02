@@ -14,7 +14,7 @@ import { ResponseView } from "./ResponseView";
 interface Props {
   example: Example;
   /** Small label above the card, e.g. "Before" / "After". */
-  badge?: { text: string; tone: "before" | "after" };
+  badge?: { text: string; tone: "before" | "after" | "neutral" };
   freeform?: boolean;
 }
 
@@ -57,7 +57,7 @@ export function PromptPlayground({ example, badge, freeform }: Props) {
           {badge && (
             <span
               className={`rounded-full px-2.5 py-0.5 text-xs font-bold uppercase tracking-wide ${
-                badge.tone === "before" ? "bg-danger-soft text-danger" : "bg-success-soft text-success"
+                badge.tone === "before" ? "bg-danger-soft text-danger" : badge.tone === "after" ? "bg-success-soft text-success" : "bg-tag-bg text-tag"
               }`}
             >
               {badge.text}
@@ -76,7 +76,7 @@ export function PromptPlayground({ example, badge, freeform }: Props) {
           editable={editable}
           showSystem={example.showSystem}
           freeform={freeform}
-          showThinking={example.prompt.thinking !== undefined}
+          showEffort={example.prompt.effort !== undefined}
           idPrefix={example.id}
         />
 
@@ -132,13 +132,25 @@ export function PromptPlayground({ example, badge, freeform }: Props) {
   );
 }
 
-export function Compare({ title, before, after, takeaway }: { title?: string; before: Example; after: Example; takeaway?: string }) {
+export function Compare({
+  title,
+  before,
+  after,
+  takeaway,
+  labels,
+}: {
+  title?: string;
+  before: Example;
+  after: Example;
+  takeaway?: string;
+  labels?: [string, string];
+}) {
   return (
     <div className="space-y-3">
       {title && <h4 className="text-lg font-semibold">{title}</h4>}
       <div className="grid gap-4 2xl:grid-cols-2">
-        <PromptPlayground example={before} badge={{ text: "Before", tone: "before" }} />
-        <PromptPlayground example={after} badge={{ text: "After", tone: "after" }} />
+        <PromptPlayground example={before} badge={labels ? { text: labels[0], tone: "neutral" } : { text: "Before", tone: "before" }} />
+        <PromptPlayground example={after} badge={labels ? { text: labels[1], tone: "neutral" } : { text: "After", tone: "after" }} />
       </div>
       {takeaway && <Markdown className="prose-lesson prose-sm rounded-xl bg-surface-2 px-4 py-3">{takeaway}</Markdown>}
     </div>

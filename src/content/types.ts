@@ -18,11 +18,18 @@ export interface PromptSpec {
   user: string;
   /** Values substituted into {NAME} placeholders in `system` and `user`. */
   variables?: Record<string, string>;
-  /** Let Claude use its built-in thinking before it answers. */
-  thinking?: boolean;
-  /** Upper bound on the length of Claude's answer, in tokens. */
+  /**
+   * How hard Claude thinks before answering. Defaults to "low" (fast and cheap).
+   * Set it on an example to show the effort selector there.
+   */
+  effort?: Effort;
+  /** A JSON schema the answer must follow, enforced by the API (structured outputs). */
+  outputSchema?: Record<string, unknown>;
+  /** Upper bound on the length of Claude's thinking plus answer, in tokens. */
   maxTokens?: number;
 }
+
+export type Effort = "low" | "medium" | "high";
 
 export type EditableField = "system" | "user" | "history" | "variables";
 
@@ -102,7 +109,15 @@ export type Block =
   | { kind: "text"; md: string }
   | { kind: "callout"; tone: "tip" | "note" | "warning" | "changed"; title?: string; md: string }
   | { kind: "playground"; example: Example }
-  | { kind: "compare"; title?: string; before: Example; after: Example; takeaway?: string }
+  | {
+      kind: "compare";
+      title?: string;
+      before: Example;
+      after: Example;
+      takeaway?: string;
+      /** Neutral badge labels for side-by-side options that aren't a before/after improvement. */
+      labels?: [string, string];
+    }
   | { kind: "exercise"; exercise: Exercise }
   | {
       kind: "custom";

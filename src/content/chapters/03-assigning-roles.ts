@@ -86,7 +86,7 @@ export const ch03: Chapter = {
           tone: "note",
           md: md`
             Throughout this course you'll find **several techniques that solve the same problem**. A role, clearer
-            instructions, or asking Claude to think step by step (Chapter 6) can all improve accuracy. Experiment and find
+            instructions, or giving Claude more effort to think (Chapter 6) can all improve accuracy. Experiment and find
             the style that works for you.
           `,
         },

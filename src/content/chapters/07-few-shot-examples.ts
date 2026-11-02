@@ -1,6 +1,6 @@
 import { usesVariable } from "../../lib/graders";
 import { md } from "../../lib/md";
-import { CATEGORY_LIST, emailCases, endsWithLetter } from "../docs/emails";
+import { CATEGORY_LIST, categoryLine, emailCases } from "../docs/emails";
 import type { Chapter } from "../types";
 
 const EXTRACTION = `Silvermist Hollow, a charming village, was home to an extraordinary group of individuals.
@@ -114,6 +114,39 @@ Q: Will Santa bring me presents on Christmas?`,
       ],
     },
     {
+      id: "more-examples",
+      title: "Let Claude help with examples",
+      blocks: [
+        {
+          kind: "text",
+          md: md`
+            Writing good, varied examples is the hard part. Claude can help: give it the examples you have and ask for more,
+            especially the tricky cases you haven't thought of. Always read what it writes before using it. You're the one
+            who knows what the right answer is.
+          `,
+        },
+        {
+          kind: "playground",
+          example: {
+            id: "7-generate-examples",
+            title: "Ask for more (and trickier) examples",
+            prompt: {
+              user: `I'm building a classifier that sorts customer emails into these categories:
+(A) Pre-sale question  (B) Broken or defective item  (C) Billing question  (D) Other
+
+Here are my examples so far:
+<examples>
+<example>Email: How much does the Mixmaster4000 cost? → A</example>
+<example>Email: My Mixmaster won't turn on. → B</example>
+</examples>
+
+Write four more examples in the same format. Make them varied, and include at least two that are genuinely hard to classify, with a short note on why each is tricky.`,
+            },
+          },
+        },
+      ],
+    },
+    {
       id: "exercises",
       title: "Exercise",
       blocks: [
@@ -123,46 +156,48 @@ Q: Will Santa bring me presents on Christmas?`,
             id: "7.1",
             title: "Classify emails by example",
             goal: md`
-              Back to the four customer emails from Chapter 6. This time, use **examples** to teach Claude the format:
-              the **very last letter** of Claude's answer must be the category letter (A–D). Keep \`{email}\` in your prompt.
+              Back to the four customer emails from Chapter 6. This time, use **examples** to teach Claude an exact
+              format: each answer must be **one line, exactly like \`Category: B\`**, with nothing before or after it.
+              Keep \`{email}\` in your prompt.
 
               Categories: (A) Pre-sale question · (B) Broken or defective item · (C) Billing question · (D) Other (please explain)
             `,
             start: { user: "Please classify this email as either green or blue: {email}" },
             editable: ["user"],
             promptCriteria: [usesVariable("email"), { label: "Your prompt includes at least one example", test: (t) => /example/i.test(t) }],
-            cases: emailCases(endsWithLetter),
+            cases: emailCases(categoryLine),
             hints: [
-              "Write two or three short made-up emails and show the exact answer you want for each, e.g. “The correct category is: B”.",
-              "Put each example inside `<example>` tags, and keep the category list and the `{email}` placeholder in the prompt.",
-              "Format the real email the same way as your examples, so Claude follows the same pattern and ends with the letter.",
+              "Write two or three short made-up emails and show the exact answer for each, e.g. `Category: B`.",
+              "Put each example inside `<example>` tags (all of them inside `<examples>`), and keep the category list and the `{email}` placeholder in the prompt.",
+              "Format the real email the same way as your examples, and say “Answer in exactly the same format as the examples.”",
             ],
             solution: {
-              user: `Please classify emails into the following categories, and do not include explanations:
+              user: `Classify customer emails into these categories:
 <categories>
 ${CATEGORY_LIST}
 </categories>
 
-Here are a few examples of correct answer formatting:
+Here are some examples of the exact answer format:
+<examples>
 <example>
-Q: How much does it cost to buy a Mixmaster4000?
-A: The correct category is: A
+Email: How much does it cost to buy a Mixmaster4000?
+Category: A
 </example>
 <example>
-Q: My Mixmaster won't turn on.
-A: The correct category is: B
+Email: My Mixmaster won't turn on.
+Category: B
 </example>
 <example>
-Q: Please remove me from your mailing list.
-A: The correct category is: D
+Email: Please remove me from your mailing list.
+Category: D
 </example>
+</examples>
 
-Here is the email for you to categorize:
-Q: {email}
+Email: {email}
 
-Answer in exactly the same format as the examples.`,
+Answer in exactly the same format as the examples: a single line starting with "Category:".`,
             },
-            takeaway: "Examples pinned down the format so precisely that a program can read the answer from the last character.",
+            takeaway: "Three short examples pinned down the format exactly, without a single line of format description.",
           },
         },
       ],

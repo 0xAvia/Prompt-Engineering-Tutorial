@@ -91,10 +91,12 @@ export function retrieve(question: string, k = 3): Hit[] {
     .slice(0, k);
 }
 
-/** Format retrieved documents for a prompt. */
+/** Format retrieved documents for a prompt, in the nested structure Anthropic recommends for multiple documents. */
 export function formatDocs(hits: Hit[]): string {
   if (!hits.length) return "(no matching documents found)";
-  return hits.map((h) => `<document id="${h.doc.id}" title="${h.doc.title}">\n${h.doc.text}\n</document>`).join("\n");
+  return hits
+    .map((h) => `<document index="${h.doc.id}">\n<source>${h.doc.title}</source>\n<document_content>\n${h.doc.text}\n</document_content>\n</document>`)
+    .join("\n");
 }
 
 export const RAG_DEFAULT_TEMPLATE = `Here are some articles from the Brightwater Bikes help centre:
@@ -102,7 +104,7 @@ export const RAG_DEFAULT_TEMPLATE = `Here are some articles from the Brightwater
 {DOCUMENTS}
 </documents>
 
-Answer the customer's question using only these documents. After each fact you use, cite the document id in square brackets, like [3]. If the documents don't contain the answer, say you don't have that information instead of guessing.
+Answer the customer's question using only these documents. After each fact you use, cite the document index in square brackets, like [3]. If the documents don't contain the answer, say you don't have that information instead of guessing.
 
 <question>
 {QUESTION}

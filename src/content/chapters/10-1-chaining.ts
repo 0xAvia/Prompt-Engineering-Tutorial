@@ -22,8 +22,9 @@ export const ch10_1: Chapter = {
   minutes: 15,
   goals: [
     "Ask Claude to check and correct its previous answer",
-    "Use a draft-then-improve loop",
+    "Use a draft → review → refine loop with explicit criteria",
     "Feed one prompt's output into the next prompt",
+    "Know when chaining is worth it now that Claude thinks on its own",
   ],
   sections: [
     {
@@ -41,8 +42,10 @@ export const ch10_1: Chapter = {
             - **Pipelines**: a fresh prompt that receives the previous step's output as data, like a template with a
               \`{PREVIOUS}\` placeholder.
 
-            Why chain? Each step is simpler, so it's more reliable. You can inspect the output between steps. And you
-            can use a different prompt (or model) for each job.
+            With built-in thinking, Claude already handles most multi-step reasoning inside a single call, so you don't
+            need to chain just to make it think. Chain when you want to **inspect or check the output between steps**,
+            when each step needs a **different prompt** (or model), or when your app needs a **fixed pipeline** it can
+            log and test step by step.
 
             First, let's ask Claude for something easy to get subtly wrong, then ask it to check its work. Press
             **Run the chain** to run both steps in order.
@@ -84,17 +87,21 @@ export const ch10_1: Chapter = {
       ],
     },
     {
-      id: "improve",
-      title: "Draft, then improve",
+      id: "self-correct",
+      title: "Draft, review, refine",
       blocks: [
         {
           kind: "text",
           md: md`
-            You can also simply ask Claude to make its work better. Tastes vary, but the second draft is often stronger.
-            Try more specific follow-ups too: “Make it funnier”, “Cut it to two sentences”, “Add a twist ending”.
+            The most useful chain is **self-correction**: Claude writes a draft, a second call reviews it against
+            **explicit criteria**, and a third rewrites it to fix what the review found. “Make it better” is vague;
+            a checklist tells the reviewer exactly what “better” means, and you can read the review yourself.
+
+            Step 2 gets the draft through \`{STEP1}\`; step 3 gets both the draft and the review (\`{STEP2}\`). Try
+            editing the criteria in step 2.
           `,
         },
-        { kind: "custom", component: "chain-runner", preset: "improve-story" },
+        { kind: "custom", component: "chain-runner", preset: "self-correct" },
       ],
     },
     {
@@ -121,6 +128,17 @@ export const ch10_1: Chapter = {
     },
   ],
   quiz: [
+    {
+      q: "Claude already thinks before answering. When is splitting a task into a chain of prompts still worth it?",
+      options: [
+        "Always: every task should be chained",
+        "When you want to check or log the output between steps, or each step needs a different prompt",
+        "Only when using the cheapest model",
+        "Never: chaining is obsolete",
+      ],
+      answer: 1,
+      explain: "Thinking handles most multi-step reasoning in one call. Chains earn their keep when you need to inspect, check or reuse the in-between results.",
+    },
     {
       q: "What is prompt chaining?",
       options: ["Writing one very long prompt", "Using the output of one Claude call as input to the next", "Linking to other websites", "Running the same prompt many times"],

@@ -1,11 +1,11 @@
 import Anthropic from "@anthropic-ai/sdk";
 import type { MessageCreateParamsBase, MessageParam } from "@anthropic-ai/sdk/resources/messages/messages";
-import type { PromptSpec } from "../content/types";
-import { getModel } from "./models";
+import type { Effort, PromptSpec } from "../content/types";
+import { THINKING, getModel } from "./models";
 import { fillTemplate } from "./template";
 
-const DEFAULT_MAX_TOKENS = 4000;
-const THINKING_MAX_TOKENS = 8000;
+// Thinking counts toward max_tokens, so leave room for it on top of the answer.
+const MAX_TOKENS: Record<Effort, number> = { low: 8000, medium: 12000, high: 16000 };
 
 /**
  * Learners bring their own key, which never leaves their browser except to go
@@ -21,7 +21,8 @@ export interface ResolvedRequest {
   system?: string;
   messages: MessageParam[];
   maxTokens: number;
-  thinking: boolean;
+  effort: Effort;
+  outputSchema?: Record<string, unknown>;
 }
 
 export function resolveRequest(spec: PromptSpec, modelId: string): ResolvedRequest {
@@ -31,27 +32,29 @@ export function resolveRequest(spec: PromptSpec, modelId: string): ResolvedReque
     ...(spec.history ?? []).map((t) => ({ role: t.role, content: fillTemplate(t.content, vars) })),
     { role: "user" as const, content: fillTemplate(spec.user, vars) },
   ];
-  const thinking = !!spec.thinking;
+  const effort = spec.effort ?? "low";
   return {
     model: getModel(modelId).id,
     system,
     messages,
-    thinking,
-    maxTokens: spec.maxTokens ?? (thinking ? THINKING_MAX_TOKENS : DEFAULT_MAX_TOKENS),
+    effort,
+    ...(spec.outputSchema ? { outputSchema: spec.outputSchema } : {}),
+    maxTokens: spec.maxTokens ?? MAX_TOKENS[effort],
   };
 }
 
 /** Turn a resolved request into Messages API params. */
 export function toParams(req: ResolvedRequest): MessageCreateParamsBase {
-  const model = getModel(req.model);
-  const thinkingConfig = req.thinking ? model.thinkingOn : model.thinkingOff;
   return {
-    model: model.id,
+    model: getModel(req.model).id,
     max_tokens: req.maxTokens,
     ...(req.system ? { system: req.system } : {}),
     messages: req.messages,
-    output_config: { effort: req.thinking ? "medium" : "low" },
-    ...(thinkingConfig ? { thinking: thinkingConfig } : {}),
+    thinking: THINKING,
+    output_config: {
+      effort: req.effort,
+      ...(req.outputSchema ? { format: { type: "json_schema" as const, schema: req.outputSchema } } : {}),
+    },
   };
 }
 

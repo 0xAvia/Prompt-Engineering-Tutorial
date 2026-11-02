@@ -18,7 +18,7 @@ export const chapters: Chapter[] = [ch01, ch02, ch03, ch04, ch05, ch06, ch07, ch
 
 export const levels: { id: Level; title: string; blurb: string }[] = [
   { id: "beginner", title: "Beginner", blurb: "How prompts are put together, and the habits that fix most problems." },
-  { id: "intermediate", title: "Intermediate", blurb: "Templates, formatting, step-by-step thinking and examples." },
+  { id: "intermediate", title: "Intermediate", blurb: "Templates, formatting, thinking and effort, and examples." },
   { id: "advanced", title: "Advanced", blurb: "Keeping Claude honest and building real-world prompts from scratch." },
   { id: "appendix", title: "Beyond prompting", blurb: "Chaining prompts, tool use, retrieval and testing." },
 ];

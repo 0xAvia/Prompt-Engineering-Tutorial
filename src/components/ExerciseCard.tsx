@@ -103,7 +103,8 @@ export function ExerciseCard({ exercise }: { exercise: Exercise }) {
           spec={spec}
           onChange={setSpec}
           editable={exercise.editable}
-          showThinking={exercise.start.thinking !== undefined}
+          showEffort={exercise.start.effort !== undefined}
+          caseVars={Object.keys(exercise.cases?.[0]?.variables ?? {})}
           idPrefix={`ex-${exercise.id}`}
         />
 
