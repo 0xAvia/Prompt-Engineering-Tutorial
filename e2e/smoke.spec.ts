@@ -96,7 +96,8 @@ test("a playground streams Claude's answer and sends a valid request", async ({ 
   expect(body.model).toBe("claude-haiku-5-5");
   expect(body.stream).toBe(true);
   expect(body).not.toHaveProperty("temperature");
-  expect(body.thinking).toEqual({ type: "disabled" });
+  expect(body.thinking).toEqual({ type: "adaptive", display: "summarized" });
+  expect(body.output_config).toEqual({ effort: "low" });
   expect(body.messages).toEqual([{ role: "user", content: "Hi Claude, how are you?" }]);
   expect(headers["anthropic-dangerous-direct-browser-access"]).toBe("true");
   // Current SDKs send API keys as a bearer token.
@@ -239,4 +240,45 @@ test("the built page ships a Content-Security-Policy that only allows talking to
   expect(csp).toContain("script-src 'self' 'sha256-");
   expect(csp).not.toContain("script-src 'self' 'unsafe-inline'");
   expect(csp).toContain("object-src 'none'");
+});
+
+test("the effort selector changes the request", async ({ page }) => {
+  await withKey(page);
+  const requests = await mockClaude(page, "20");
+  await page.goto("#/learn/thinking-step-by-step");
+  const card = page.getByRole("region", { name: "A seating puzzle" });
+  await card.getByRole("radio", { name: "High" }).click();
+  await card.getByRole("button", { name: "Run", exact: true }).click();
+  await expect(card.getByText("20", { exact: true })).toBeVisible();
+  expect(requests[0].body.output_config).toEqual({ effort: "high" });
+  expect(requests[0].body.max_tokens).toBe(16000);
+});
+
+test("structured outputs send the JSON schema", async ({ page }) => {
+  await withKey(page);
+  const requests = await mockClaude(page, '{"first_line":"a","second_line":"b","third_line":"c"}');
+  await page.goto("#/learn/formatting-output");
+  const card = page.getByRole("region", { name: "Structured outputs: JSON, guaranteed" });
+  await expect(card.getByText("Structured output is on")).toBeVisible();
+  await card.getByRole("button", { name: "Run", exact: true }).click();
+  await expect(card.getByText('"first_line":"a"', { exact: false })).toBeVisible();
+  const format = (requests[0].body.output_config as { format: { type: string; schema: { required: string[] } } }).format;
+  expect(format.type).toBe("json_schema");
+  expect(format.schema.required).toEqual(["first_line", "second_line", "third_line"]);
+});
+
+test("the self-correction chain passes the draft and review to the final step", async ({ page }) => {
+  await withKey(page);
+  const requests = await mockClaude(page, (body) => {
+    const prompt = body.messages.at(-1)!.content;
+    if (prompt.startsWith("Rewrite")) return "FINAL";
+    if (prompt.startsWith("Review")) return "REVIEW-TEXT";
+    return "DRAFT-TEXT";
+  });
+  await page.goto("#/learn/chaining-prompts");
+  await page.getByRole("button", { name: "Run the chain" }).nth(1).click();
+  await expect.poll(() => requests.length).toBe(3);
+  const last = (requests[2].body.messages as { content: string }[])[0].content;
+  expect(last).toContain("<draft>\nDRAFT-TEXT\n</draft>");
+  expect(last).toContain("<review>\nREVIEW-TEXT\n</review>");
 });

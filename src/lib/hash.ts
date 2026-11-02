@@ -4,7 +4,7 @@ import { resolveRequest } from "./claude";
 /** Stable fingerprint of what would be sent, ignoring the model. Used to key recorded demo answers. */
 export function promptHash(spec: PromptSpec): string {
   const r = resolveRequest(spec, "claude-haiku-5-5");
-  const s = JSON.stringify([r.system ?? "", r.messages, r.thinking]);
+  const s = JSON.stringify([r.system ?? "", r.messages, r.effort, r.outputSchema ?? null]);
   let h = 0x811c9dc5;
   for (let i = 0; i < s.length; i++) {
     h ^= s.charCodeAt(i);

@@ -81,14 +81,14 @@ export const ch10_4: Chapter = {
               **mixed**, in the exact format \`<label>mixed</label>\`. The starting prompt fails most cases. Improve it until
               it passes all six, then run it again to make sure it wasn't luck.
             `,
-            start: { user: "Is this review positive or negative?\n\n{REVIEW}" },
+            start: { user: "Is this review positive or negative?\n\n{REVIEW}", effort: "low" },
             editable: ["user"],
             promptCriteria: [usesVariable("REVIEW")],
             cases,
             hints: [
               "The starting prompt doesn't even offer “mixed”, and doesn't ask for the <label> format. Fix those first, then run the eval.",
               "Define each label: e.g. “mixed: the review contains clear praise *and* clear criticism”. Warn about sarcasm.",
-              "If the tricky cases still fail, let Claude reason briefly in <thinking> tags before the <label>, or add an example or two.",
+              "If the tricky cases still fail, add an example or two of sarcastic and mixed reviews, or try medium effort.",
             ],
             solution: {
               user: `Classify the sentiment of this product review as positive, negative, or mixed.
@@ -100,7 +100,8 @@ export const ch10_4: Chapter = {
 {REVIEW}
 </review>
 
-Think briefly in <thinking> tags, then give your answer as exactly one word inside <label></label> tags.`,
+Give your answer as exactly one word inside <label></label> tags.`,
+              effort: "low",
             },
             takeaway: "That's prompt engineering as a discipline: a test set, a score, and changes you can prove helped.",
           },

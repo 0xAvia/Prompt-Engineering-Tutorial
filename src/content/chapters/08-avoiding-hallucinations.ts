@@ -90,8 +90,8 @@ export const ch08: Chapter = {
             whose exact answer **isn't in the document**: subscriber numbers on May 31, 2020. The document has subscriber
             numbers for *other* dates, which makes a wrong answer tempting.
 
-            The fix: tell Claude to **pull out the most relevant quote first**, then judge whether it actually answers the
-            question, in a \`<scratchpad>\`, before writing the answer.
+            The fix: tell Claude to **pull out the most relevant quotes first**, then say whether they actually answer
+            the question, and only then write the answer.
           `,
         },
         {
@@ -99,14 +99,14 @@ export const ch08: Chapter = {
           before: {
             id: "8-matterport-plain",
             prompt: {
-              user: "<question>What was Matterport's subscriber base on the precise date of May 31, 2020?</question>\nPlease read the below document. Then write a brief numerical answer inside <answer> tags.\n<document>\n{DOCUMENT}\n</document>",
+              user: "<document>\n{DOCUMENT}\n</document>\n\nWhat was Matterport's subscriber base on the precise date of May 31, 2020? Write a brief numerical answer inside <answer> tags.",
               variables: { DOCUMENT: MATTERPORT_10K },
             },
           },
           after: {
             id: "8-matterport-evidence",
             prompt: {
-              user: "<question>What was Matterport's subscriber base on the precise date of May 31, 2020?</question>\nPlease read the below document. Then, in <scratchpad> tags, pull the most relevant quote from the document and consider whether it answers the user's question or whether it lacks sufficient detail. Then write a brief numerical answer in <answer> tags.\n<document>\n{DOCUMENT}\n</document>",
+              user: "<document>\n{DOCUMENT}\n</document>\n\nWhat was Matterport's subscriber base on the precise date of May 31, 2020?\n\nFirst, copy the sentences from the document that are most relevant to this question into <quotes> tags. Then say in one sentence whether those quotes answer the question for that exact date. Finally, give a brief numerical answer in <answer> tags, or say that the document doesn't contain it.",
               variables: { DOCUMENT: MATTERPORT_10K },
             },
           },
@@ -115,11 +115,11 @@ export const ch08: Chapter = {
         {
           kind: "callout",
           tone: "tip",
-          title: "Where to put the question",
+          title: "Long document first, question last",
           md: md`
-            These examples put the question at the top so it's easy to read. In real prompts with long documents,
-            **put the document first and the question at the end**. Claude tends to do better that way. You'll see this
-            in Chapter 9.
+            Notice the order in both prompts: the long document at the top, the question and instructions at the end.
+            With long documents that order works noticeably better; Anthropic reports up to 30% better answers in its
+            tests. Exercise 8.2 starts with the question on top, and moving it is part of the fix.
           `,
         },
         {
@@ -177,14 +177,18 @@ export const ch08: Chapter = {
             goal: md`
               The question asks how much Matterport's subscribers grew from December 2018 to December 2022. The answer is
               in the document: about **49-fold**. Edit the prompt so Claude **gathers relevant quotes first**, then answers
-              based on them. Keep \`{DOCUMENT}\` in your prompt.
+              based on them, and **move the question below the document**. Keep \`{DOCUMENT}\` in your prompt.
             `,
             start: {
               user: "From December 2018 to December 2022, by what amount did Matterport's subscribers grow?\n<document>\n{DOCUMENT}\n</document>",
               variables: { DOCUMENT: MATTERPORT_10K },
             },
             editable: ["user"],
-            promptCriteria: [usesVariable("DOCUMENT"), { label: "Your prompt asks for quotes from the document", test: (t) => /quot/i.test(t) }],
+            promptCriteria: [
+              usesVariable("DOCUMENT"),
+              { label: "Your prompt asks for quotes from the document", test: (t) => /quot/i.test(t) },
+              { label: "The question comes after the document", test: (t) => t.includes("{DOCUMENT}") && t.lastIndexOf("?") > t.indexOf("{DOCUMENT}") },
+            ],
             criteria: [matches(/49[- ]?(fold|x\b|×|times)/i, "Answer gives the 49-fold growth figure")],
             hints: [
               "Ask Claude to first pull out the quotes that are relevant to the question, in tags like `<quotes>`.",

@@ -11,6 +11,7 @@ export const ch02: Chapter = {
   minutes: 15,
   goals: [
     "Apply the “golden rule” of clear prompting",
+    "Explain the reason behind an instruction, so Claude can generalize it",
     "Remove unwanted preambles and get decisive answers just by asking",
     "Control the language, length and format of Claude's reply",
   ],
@@ -113,6 +114,69 @@ export const ch02: Chapter = {
       ],
     },
     {
+      id: "explain-why",
+      title: "Explain why",
+      blocks: [
+        {
+          kind: "text",
+          md: md`
+            A rule on its own tells Claude *what*. Adding the reason tells it *why*, and Claude can then apply the idea
+            to situations your rule didn't mention.
+
+            Below, both prompts ban ellipses (“…”). The second explains that the text will be read aloud by a
+            text-to-speech engine. Run both and look beyond the ellipses: does the second version also avoid other
+            things a speech engine would stumble over, like symbols, emoji or headings?
+          `,
+        },
+        {
+          kind: "compare",
+          before: {
+            id: "2-why-plain",
+            prompt: { system: "Never use ellipses.", user: "Write the opening of a spooky bedtime story about an old lighthouse, in about 80 words." },
+          },
+          after: {
+            id: "2-why-reason",
+            prompt: {
+              system:
+                "Your response will be read aloud by a text-to-speech engine, so never use ellipses, since the engine doesn't know how to pronounce them.",
+              user: "Write the opening of a spooky bedtime story about an old lighthouse, in about 80 words.",
+            },
+          },
+          takeaway: "Claude generalizes from the reason. One sentence of “because…” often replaces a whole list of extra rules.",
+        },
+      ],
+    },
+    {
+      id: "critique",
+      title: "Let Claude be your colleague",
+      blocks: [
+        {
+          kind: "text",
+          md: md`
+            Remember the golden rule: show your prompt to a colleague. Claude can be that colleague. Paste a prompt you're
+            working on and ask what's unclear. It's a fast way to find the questions a reader would have.
+          `,
+        },
+        {
+          kind: "playground",
+          example: {
+            id: "2-critique",
+            title: "Ask Claude to review a prompt",
+            note: "Replace the draft inside the tags with any prompt of your own.",
+            prompt: {
+              user: `Here is a prompt I've written for an AI assistant:
+
+<draft_prompt>
+Write a summary of the meeting notes for the team.
+</draft_prompt>
+
+Imagine you're a smart new colleague receiving these instructions with no other context. List the questions you'd need answered to do a great job, then suggest an improved version of the prompt.`,
+            },
+          },
+        },
+      ],
+    },
+    {
       id: "exercises",
       title: "Exercises",
       blocks: [
@@ -181,6 +245,17 @@ export const ch02: Chapter = {
     },
   ],
   quiz: [
+    {
+      q: "Which instruction is likely to work best?",
+      options: [
+        "“NEVER use ellipses!!!”",
+        "“Never use ellipses.”",
+        "“This will be read aloud by a text-to-speech engine, so never use ellipses, since it can't pronounce them.”",
+        "“Don't use ellipses or else.”",
+      ],
+      answer: 2,
+      explain: "Giving the reason lets Claude apply the idea more widely, like also avoiding other symbols a speech engine can't read.",
+    },
     {
       q: "What's the “golden rule” of clear prompting?",
       options: [

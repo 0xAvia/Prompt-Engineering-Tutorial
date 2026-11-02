@@ -150,6 +150,27 @@ export const ch01: Chapter = {
       ],
     },
     {
+      id: "iterate",
+      title: "How prompt engineers work",
+      blocks: [
+        {
+          kind: "text",
+          md: md`
+            Prompt engineering isn't about magic words. It's a simple loop, and you'll use it in every exercise:
+
+            1. **Decide what “good” looks like** before you start. “Counts to three using digits” is testable;
+               “a nice answer” isn't.
+            2. **Try it on a few different inputs**, including awkward ones. A prompt that works once can fail on the
+               next message.
+            3. **Change one thing at a time** and run it again, so you know what helped.
+
+            The exercises in this course do steps 1 and 2 for you: each one has a checker that knows what good looks
+            like, and some run your prompt on several inputs at once. In the appendix you'll learn to build your own.
+          `,
+        },
+      ],
+    },
+    {
       id: "exercises",
       title: "Exercises",
       blocks: [

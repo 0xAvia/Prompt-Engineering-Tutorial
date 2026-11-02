@@ -1,6 +1,6 @@
 import type Anthropic from "@anthropic-ai/sdk";
 import { makeClient } from "./claude";
-import { getModel } from "./models";
+import { THINKING, getModel } from "./models";
 
 export type TraceStep =
   | { kind: "text"; text: string }
@@ -44,12 +44,12 @@ export async function runToolLoop(opts: {
     const response = await client.messages.create(
       {
         model: model.id,
-        max_tokens: 2000,
+        max_tokens: 4000, // thinking counts toward this too
         ...(opts.system?.trim() ? { system: opts.system } : {}),
         tools: opts.tools,
         messages,
         output_config: { effort: "low" },
-        ...(model.thinkingOff ? { thinking: model.thinkingOff } : {}),
+        thinking: THINKING,
       },
       { signal: opts.signal },
     );

@@ -80,17 +80,17 @@ Here is the user's question:
     on: true,
   },
   {
-    key: "thinking",
-    label: "Thinking step by step",
-    tip: "For multi-step tasks, ask Claude to think first.",
-    text: "Think about your answer first before you respond, in <thinking> tags.",
+    key: "consider",
+    label: "What to consider",
+    tip: "Claude thinks on its own (effort controls how much). Point that thinking at what matters.",
+    text: "Before you answer, check the conversation history for anything the user has already told you about their situation.",
     on: true,
   },
   {
     key: "format",
     label: "Output formatting",
     tip: "The exact shape of the answer. Put it toward the end.",
-    text: "Then put your response in <response></response> tags.",
+    text: "Put your response in <response></response> tags.",
     on: true,
   },
 ];

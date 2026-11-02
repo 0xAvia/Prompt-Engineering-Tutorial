@@ -1,7 +1,7 @@
 import { Check, Copy } from "lucide-react";
 import { useState } from "react";
 import type { ResolvedRequest } from "../lib/claude";
-import { getModel } from "../lib/models";
+import { THINKING } from "../lib/models";
 
 // Shows the exact API call behind a playground, so learners can move to real code later.
 
@@ -21,8 +21,6 @@ function pyValue(v: unknown): string {
 }
 
 export function toPython(req: ResolvedRequest): string {
-  const m = getModel(req.model);
-  const thinking = req.thinking ? m.thinkingOn : m.thinkingOff;
   const lines = [
     "import anthropic",
     "",
@@ -38,15 +36,16 @@ export function toPython(req: ResolvedRequest): string {
     lines.push(`        {"role": ${JSON.stringify(msg.role)}, "content": ${pyStr(String(msg.content))}},`);
   }
   lines.push("    ],");
-  lines.push(`    output_config={"effort": ${JSON.stringify(req.thinking ? "medium" : "low")}},`);
-  if (thinking) lines.push(`    thinking=${pyValue(thinking)},`);
+  lines.push(`    thinking=${pyValue(THINKING)},`);
+  const config: Record<string, unknown> = { effort: req.effort };
+  if (req.outputSchema) config.format = { type: "json_schema", schema: req.outputSchema };
+  lines.push(`    output_config=${pyValue(config)},`);
   lines.push(")", "", "for block in message.content:", '    if block.type == "text":', "        print(block.text)");
   return lines.join("\n");
 }
 
 export function toTypeScript(req: ResolvedRequest): string {
-  const m = getModel(req.model);
-  const thinking = req.thinking ? m.thinkingOn : m.thinkingOff;
+  const obj = (v: unknown) => JSON.stringify(v).replace(/"(\w+)":/g, "$1: ");
   const lines = [
     'import Anthropic from "@anthropic-ai/sdk";',
     "",
@@ -62,8 +61,10 @@ export function toTypeScript(req: ResolvedRequest): string {
     lines.push(`    { role: ${JSON.stringify(msg.role)}, content: ${tsStr(String(msg.content))} },`);
   }
   lines.push("  ],");
-  lines.push(`  output_config: { effort: ${JSON.stringify(req.thinking ? "medium" : "low")} },`);
-  if (thinking) lines.push(`  thinking: ${JSON.stringify(thinking).replace(/"(\w+)":/g, "$1: ")},`);
+  lines.push(`  thinking: ${obj(THINKING)},`);
+  const config: Record<string, unknown> = { effort: req.effort };
+  if (req.outputSchema) config.format = { type: "json_schema", schema: req.outputSchema };
+  lines.push(`  output_config: ${obj(config)},`);
   lines.push("});", "", "for (const block of message.content) {", '  if (block.type === "text") console.log(block.text);', "}");
   return lines.join("\n");
 }
