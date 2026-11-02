@@ -1,11 +1,27 @@
 import { CircleCheck, FlaskConical, GraduationCap, KeyRound, Settings } from "lucide-react";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { chapterStats, chapters, levels } from "../content/course";
 import { useAppState } from "../lib/storage";
-import { openKeyDialog } from "../lib/ui";
+import { openKeyDialog, useKeyDialogOpen } from "../lib/ui";
 import { site } from "../site";
-import { KeyDialog } from "./KeyDialog";
+
+const KeyDialog = lazy(() => import("./KeyDialog").then((m) => ({ default: m.KeyDialog })));
+
+/** Loads the key dialog (and the Claude SDK) the first time it's opened. */
+function LazyKeyDialog() {
+  const open = useKeyDialogOpen();
+  const [wanted, setWanted] = useState(false);
+  useEffect(() => {
+    if (open) setWanted(true);
+  }, [open]);
+  if (!wanted && !open) return null;
+  return (
+    <Suspense fallback={null}>
+      <KeyDialog />
+    </Suspense>
+  );
+}
 
 export function Layout() {
   const { pathname } = useLocation();
@@ -23,7 +39,7 @@ export function Layout() {
         <Outlet />
       </main>
       <Footer />
-      <KeyDialog />
+      <LazyKeyDialog />
     </div>
   );
 }
@@ -43,17 +59,17 @@ function Header() {
         </Link>
         <nav className="flex items-center gap-1" aria-label="Main">
           <NavLink to="/" end className={navCls}>
-            <GraduationCap className="size-4" aria-hidden /> Course
+            <GraduationCap className="size-4" aria-hidden /> <span className="max-sm:sr-only">Course</span>
           </NavLink>
           <NavLink to="/playground" className={navCls}>
-            <FlaskConical className="size-4" aria-hidden /> Playground
+            <FlaskConical className="size-4" aria-hidden /> <span className="max-sm:sr-only">Playground</span>
           </NavLink>
         </nav>
         <div className="ml-auto flex items-center gap-1.5">
           <button
             type="button"
             onClick={openKeyDialog}
-            className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-semibold transition-colors ${
+            className={`inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border px-3 py-1 text-xs font-semibold transition-colors ${
               apiKey ? "border-success/40 bg-success-soft text-success" : "border-warning/40 bg-warning-soft text-warning hover:border-warning"
             }`}
             title={apiKey ? "API key added. Click to change it." : "No API key yet: you're in demo mode. Click to add one."}

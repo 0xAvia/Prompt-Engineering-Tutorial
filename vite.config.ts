@@ -7,6 +7,8 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   base: process.env.BASE_PATH ?? "/Prompt-Engineering-Tutorial/",
   plugins: [react(), tailwindcss()],
+  // The editor and the Claude SDK are big, but they load only on lesson pages.
+  build: { chunkSizeWarningLimit: 700 },
   test: {
     include: ["tests/**/*.test.ts"],
     environment: "node",
