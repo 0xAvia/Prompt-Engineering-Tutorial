@@ -9,8 +9,12 @@ import { ch06 } from "./chapters/06-thinking-step-by-step";
 import { ch07 } from "./chapters/07-few-shot-examples";
 import { ch08 } from "./chapters/08-avoiding-hallucinations";
 import { ch09 } from "./chapters/09-complex-prompts";
+import { ch10_1 } from "./chapters/10-1-chaining";
+import { ch10_2 } from "./chapters/10-2-tool-use";
+import { ch10_3 } from "./chapters/10-3-retrieval";
+import { ch10_4 } from "./chapters/10-4-testing";
 
-export const chapters: Chapter[] = [ch01, ch02, ch03, ch04, ch05, ch06, ch07, ch08, ch09];
+export const chapters: Chapter[] = [ch01, ch02, ch03, ch04, ch05, ch06, ch07, ch08, ch09, ch10_1, ch10_2, ch10_3, ch10_4];
 
 export const levels: { id: Level; title: string; blurb: string }[] = [
   { id: "beginner", title: "Beginner", blurb: "How prompts are put together, and the habits that fix most problems." },
@@ -32,6 +36,13 @@ export function chapterExercises(ch: Chapter): Exercise[] {
   return ch.sections.flatMap((s) => s.blocks.flatMap((b) => (b.kind === "exercise" ? [b.exercise] : [])));
 }
 
+/** Ids of every graded exercise in a chapter, including interactive widgets. */
+export function chapterExerciseIds(ch: Chapter): string[] {
+  return ch.sections.flatMap((s) =>
+    s.blocks.flatMap((b) => (b.kind === "exercise" ? [b.exercise.id] : b.kind === "custom" && b.exerciseId ? [b.exerciseId] : [])),
+  );
+}
+
 export interface ChapterStats {
   exercises: number;
   solved: number;
@@ -41,8 +52,8 @@ export interface ChapterStats {
 }
 
 export function chapterStats(ch: Chapter, p: Progress): ChapterStats {
-  const ex = chapterExercises(ch);
-  const solved = ex.filter((e) => p.solved[e.id]).length;
+  const ex = chapterExerciseIds(ch);
+  const solved = ex.filter((id) => p.solved[id]).length;
   const quizDone = !!p.quiz[ch.id];
   return {
     exercises: ex.length,

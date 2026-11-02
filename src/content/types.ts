@@ -94,7 +94,8 @@ export type CustomComponent =
   | "message-anatomy"
   | "prompt-builder"
   | "chain-runner"
-  | "tool-sandbox"
+  | "calculator-sandbox"
+  | "database-exercise"
   | "retrieval-sandbox";
 
 export type Block =
@@ -103,7 +104,14 @@ export type Block =
   | { kind: "playground"; example: Example }
   | { kind: "compare"; title?: string; before: Example; after: Example; takeaway?: string }
   | { kind: "exercise"; exercise: Exercise }
-  | { kind: "custom"; component: CustomComponent };
+  | {
+      kind: "custom";
+      component: CustomComponent;
+      /** Which variant to show, for widgets with several (e.g. a chain id). */
+      preset?: string;
+      /** Set when the widget is a graded exercise, so it counts toward progress. */
+      exerciseId?: string;
+    };
 
 export interface Section {
   id: string;

@@ -1,6 +1,7 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { createHashRouter, RouterProvider } from "react-router-dom";
+import { ErrorPage } from "./components/ErrorPage";
 import { Layout } from "./components/Layout";
 import { ChapterPage } from "./pages/ChapterPage";
 import { HomePage } from "./pages/HomePage";
@@ -13,6 +14,7 @@ import "./styles/index.css";
 const router = createHashRouter([
   {
     element: <Layout />,
+    errorElement: <ErrorPage />,
     children: [
       { path: "/", element: <HomePage /> },
       { path: "/setup", element: <SetupPage /> },

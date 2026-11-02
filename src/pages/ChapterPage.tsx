@@ -26,7 +26,7 @@ function BlockView({ block }: { block: Block }) {
     case "exercise":
       return <ExerciseCard exercise={block.exercise} />;
     case "custom":
-      return <CustomBlock component={block.component} />;
+      return <CustomBlock component={block.component} preset={block.preset} />;
   }
 }
 
@@ -80,7 +80,7 @@ export function ChapterPage() {
         </div>
       </dialog>
 
-      <article className="min-w-0 max-w-[54rem] py-6 sm:py-8">
+      <article key={chapter.id} className="min-w-0 max-w-[54rem] py-6 sm:py-8">
         <button
           type="button"
           onClick={() => setNavOpen(true)}

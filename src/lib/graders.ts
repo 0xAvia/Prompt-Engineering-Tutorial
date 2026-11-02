@@ -75,9 +75,9 @@ export function usesVariable(name: string): Criterion {
   return { label: `Your prompt uses the {${name}} placeholder`, test: (t) => t.includes(`{${name}}`) };
 }
 
-/** Prompt-side check: the template does not hard-code a word (or words starting with it, like "pigs"). */
+/** Prompt-side check: the template does not hard-code a word (or its plural, like "pigs"). */
 export function doesNotHardcode(word: string, why?: string): Criterion {
-  const re = new RegExp(`\\b${word.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}`, "i");
+  const re = new RegExp(`\\b${word.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}(s|es)?\\b`, "i");
   return {
     label: why ?? `Your prompt doesn't type “${word}” directly`,
     test: (t) => !re.test(t),
