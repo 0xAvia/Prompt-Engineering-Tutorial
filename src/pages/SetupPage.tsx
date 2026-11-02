@@ -30,6 +30,14 @@ const steps = [
         </a>
         , add the minimum amount of credit. On Claude Haiku 5.5 this whole course costs only a few cents, so the minimum goes a long way. You can
         also set a monthly spend limit to stay safe.
+        <span className="mt-3 block rounded-xl border border-accent/30 bg-accent-soft/60 px-3.5 py-2.5 text-ink">
+          <strong>Have a Claude Max or Ultra plan?</strong> It comes with free monthly API credits: <strong>$100 on Max</strong> and{" "}
+          <strong>$200 on Ultra</strong>, so you can skip buying credit. On claude.ai, go to <strong>Settings → Billing</strong> and, under{" "}
+          <strong>API credits</strong>, link your Console organization. Credits refresh every billing cycle and don't roll over.{" "}
+          <a href={site.apiCredits} target="_blank" rel="noreferrer noopener" className="font-medium text-accent underline underline-offset-2">
+            Details
+          </a>
+        </span>
       </>
     ),
   },
