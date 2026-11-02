@@ -87,7 +87,7 @@ export function doesNotHardcode(word: string, why?: string): Criterion {
 /** Word stems that show a poem is about a given animal, even if it never names it. */
 export const ANIMAL_WORDS: Record<string, string[]> = {
   pig: ["pig", "swine", "hog", "oink", "snout", "boar", "sow"],
-  cat: ["cat", "kitten", "kitty", "feline", "purr", "whisker", "meow"],
+  cat: ["cat", "kitten", "kitty", "tabby", "feline", "purr", "whisker", "meow"],
   dog: ["dog", "pup", "canine", "bark", "wag", "fetch", "hound"],
 };
 

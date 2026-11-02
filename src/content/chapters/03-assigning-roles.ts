@@ -8,8 +8,7 @@ const MATH = `Is this equation solved correctly below?
 2x = 6
 x = 3`;
 
-const LOGIC =
-  "Jack is looking at Anne. Anne is looking at George. Jack is married, George is not, and we don't know if Anne is married. Is a married person looking at an unmarried person?";
+const GYM = "I'm about to sign up for a one-year gym membership that renews automatically. Is there anything I should check first?";
 
 export const ch03: Chapter = {
   id: "assigning-roles",
@@ -21,7 +20,7 @@ export const ch03: Chapter = {
   goals: [
     "Use role prompting to change Claude's voice and perspective",
     "Add audience context to make answers land",
-    "Use an expert role to make Claude more careful on tricky tasks",
+    "Use an expert role to change what Claude focuses on",
   ],
   sections: [
     {
@@ -63,23 +62,27 @@ export const ch03: Chapter = {
     },
     {
       id: "expert-roles",
-      title: "Expert roles make Claude more careful",
+      title: "Expert roles change what Claude notices",
       blocks: [
         {
           kind: "text",
           md: md`
-            Roles aren't just for fun voices. Asking Claude to act as an expert can make it slow down and reason more
-            carefully. Here's a logic puzzle with a definite answer (it's **yes**: work through both cases for Anne
-            to see why).
+            Roles aren't just for fun voices. A role tells Claude **which expertise to bring**, and that changes what
+            it pays attention to. Older, smaller models sometimes needed an expert role just to get a tricky question
+            right; current models usually manage without one. Today the bigger effect is on **focus and depth**: an
+            expert notices details a general answer skims over.
 
-            Run both versions. Does the role change the answer, the reasoning, or just the tone? Run each a few times:
-            smaller models in particular can be swayed by a good role.
+            Run both versions and compare what each answer focuses on.
           `,
         },
         {
           kind: "compare",
-          before: { id: "3-logic-plain", prompt: { user: LOGIC } },
-          after: { id: "3-logic-role", prompt: { system: "You are a logic bot designed to answer complex logic problems.", user: LOGIC } },
+          before: { id: "3-role-plain", prompt: { user: GYM } },
+          after: {
+            id: "3-role-lawyer",
+            prompt: { system: "You are a consumer-protection lawyer who reviews contracts for ordinary people.", user: GYM },
+          },
+          takeaway: "Same question, different expert. The role decides which details matter, like notice periods, cancellation terms and fees, and how deep the answer goes.",
         },
         {
           kind: "callout",
@@ -141,10 +144,10 @@ export const ch03: Chapter = {
       explain: "Detailed roles with audience context give Claude much more to work with.",
     },
     {
-      q: "Besides tone, what can a good role improve?",
-      options: ["Response speed", "Accuracy on tasks like maths, logic and reviewing", "The price per token", "Nothing else"],
+      q: "Besides tone, what does a good role change?",
+      options: ["Response speed", "What Claude focuses on, and how expert the answer is", "The price per token", "Nothing else"],
       answer: 1,
-      explain: "Priming Claude with an expert role can make it more careful and accurate, not just change its voice.",
+      explain: "A role tells Claude which expertise to bring, so it notices the details that matter for the task.",
     },
   ],
 };

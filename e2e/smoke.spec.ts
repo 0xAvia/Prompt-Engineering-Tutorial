@@ -174,7 +174,11 @@ test("a bad key shows a friendly message", async ({ page }) => {
 
 test("without a key, run buttons open the key dialog and quizzes still work", async ({ page }) => {
   await page.goto("#/learn/basic-prompt-structure");
-  await page.getByRole("region", { name: "Say hello" }).getByRole("button", { name: "Add API key to run" }).click();
+  const card = page.getByRole("region", { name: "Say hello" });
+  // Unedited examples with a recorded answer run in demo mode; an edited prompt needs a key.
+  await expect(card.getByRole("button", { name: "Show Claude's answer" })).toBeVisible();
+  await card.getByRole("textbox", { name: "Your message to Claude" }).fill("Hi Claude, what's new?");
+  await card.getByRole("button", { name: "Add API key to run" }).click();
   await expect(page.getByRole("heading", { name: "Your Anthropic API key" })).toBeVisible();
   await page.keyboard.press("Escape");
 

@@ -28,6 +28,13 @@ describe("graders", () => {
     expect(containsAny(ANIMAL_WORDS.cat).test("<haiku>\nsoft paws, purring dreams\n</haiku>")).toBe(true);
   });
 
+  it("5.2 accepts cat haikus that only use cat imagery (seen in the live check)", async () => {
+    const { chapters } = await import("../src/content/course");
+    const ex = chapters.flatMap((c) => c.sections.flatMap((s) => s.blocks)).flatMap((b) => (b.kind === "exercise" ? [b.exercise] : [])).find((e) => e.id === "5.2")!;
+    const answer = "<haiku>\nSoft paws on the sill,\na sleepy gaze at the rain,\nthe whole afternoon.\n</haiku>\n\n<haiku>\nMidnight in the hall,\ntwo green eyes ignite the dark,\nthen a silent leap.\n</haiku>";
+    expect(grade(answer, ex.criteria!).every((r) => r.pass)).toBe(true);
+  });
+
   it("grade() never throws and allPass needs at least one result", () => {
     const boom = { label: "boom", test: () => { throw new Error("x"); } };
     expect(grade("x", [boom])).toEqual([{ label: "boom", pass: false }]);

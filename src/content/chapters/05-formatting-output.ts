@@ -2,6 +2,10 @@ import { ANIMAL_WORDS, contains, containsAny, doesNotHardcode, matches, moreLine
 import { md } from "../../lib/md";
 import type { Chapter } from "../types";
 
+// Cat haikus often never say "cat" (live check: "Soft paws on the sill… two green eyes ignite the dark").
+// In 5.2 every poem is about cats, so also accept paws and mice; 5.3 keeps the stricter list because a dog poem has paws too.
+const CAT_IMAGERY = [...ANIMAL_WORDS.cat, "paw", "mouse", "mice"];
+
 const twoHaikus = matches(/<haiku>[\s\S]*<\/haiku>[\s\S]*<haiku>[\s\S]*<\/haiku>/i, "Two separate <haiku>…</haiku> blocks");
 
 export const ch05: Chapter = {
@@ -239,7 +243,7 @@ export const ch05: Chapter = {
             start: { user: "Please write a haiku about {ANIMAL}. Put it in <haiku> tags.", variables: { ANIMAL: "cats" } },
             editable: ["user"],
             promptCriteria: [usesVariable("ANIMAL")],
-            criteria: [containsAny(ANIMAL_WORDS.cat, { label: "About cats" }), twoHaikus, moreLinesThan(5)],
+            criteria: [containsAny(CAT_IMAGERY, { label: "About cats" }), twoHaikus, moreLinesThan(5)],
             hints: [
               "Start simple: ask for two haikus instead of one. Then fix the formatting.",
               "Say that *each* haiku should go in its own pair of `<haiku>` tags.",
