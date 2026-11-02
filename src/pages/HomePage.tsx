@@ -56,7 +56,7 @@ export function HomePage() {
                     {stats.solved}/{stats.exercises} exercises · {stats.completed}/{stats.chapters} chapters
                   </span>
                 </div>
-                <div className="h-2 overflow-hidden rounded-full bg-surface-3" role="progressbar" aria-valuemin={0} aria-valuemax={stats.exercises} aria-valuenow={stats.solved}>
+                <div className="h-2 overflow-hidden rounded-full bg-surface-3" role="progressbar" aria-label="Exercises solved" aria-valuemin={0} aria-valuemax={stats.exercises} aria-valuenow={stats.solved}>
                   <div className="h-full rounded-full bg-accent transition-all" style={{ width: `${(stats.solved / Math.max(1, stats.exercises)) * 100}%` }} />
                 </div>
               </div>

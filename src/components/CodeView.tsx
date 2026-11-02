@@ -104,7 +104,7 @@ export function CodeView({ req }: { req: ResolvedRequest }) {
           {copied ? "Copied" : "Copy"}
         </button>
       </div>
-      <pre className="max-h-96 overflow-auto p-3.5 font-mono text-[0.8rem] leading-relaxed">
+      <pre tabIndex={0} aria-label={`${lang === "python" ? "Python" : "TypeScript"} code`} className="max-h-96 overflow-auto p-3.5 font-mono text-[0.8rem] leading-relaxed">
         <code>{code}</code>
       </pre>
     </div>

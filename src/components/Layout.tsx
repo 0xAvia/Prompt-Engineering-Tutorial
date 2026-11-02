@@ -55,7 +55,7 @@ function Header() {
       <div className="mx-auto flex h-14 max-w-7xl items-center gap-2 px-4 sm:px-6">
         <Link to="/" className="mr-2 flex items-center gap-2 font-semibold tracking-tight">
           <img src={`${import.meta.env.BASE_URL}favicon.svg`} alt="" className="size-7" />
-          <span className="hidden sm:inline">{site.name}</span>
+          <span className="max-sm:sr-only">{site.name}</span>
         </Link>
         <nav className="flex items-center gap-1" aria-label="Main">
           <NavLink to="/" end className={navCls}>

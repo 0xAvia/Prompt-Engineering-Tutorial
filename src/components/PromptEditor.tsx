@@ -36,8 +36,14 @@ interface Props {
 
 export function PromptEditor({ value, onChange, label, placeholder, readOnly, minHeight = "3.2rem", maxHeight = "26rem" }: Props) {
   const extensions = useMemo(
-    () => [EditorView.lineWrapping, promptHighlighter, EditorView.contentAttributes.of({ "aria-label": label })],
-    [label],
+    () => [
+      EditorView.lineWrapping,
+      promptHighlighter,
+      // An explicit tabindex keeps every editor reachable by keyboard, including read-only ones,
+      // so long text can always be scrolled.
+      EditorView.contentAttributes.of(readOnly ? { "aria-label": label, tabindex: "0", "aria-readonly": "true" } : { "aria-label": label, tabindex: "0" }),
+    ],
+    [label, readOnly],
   );
   return (
     <CodeMirror

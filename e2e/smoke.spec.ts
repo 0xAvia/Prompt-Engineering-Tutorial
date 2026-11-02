@@ -1,3 +1,4 @@
+import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page, type Route } from "@playwright/test";
 import { chapters } from "../src/content/course";
 
@@ -285,4 +286,46 @@ test("the self-correction chain passes the draft and review to the final step", 
   const last = (requests[2].body.messages as { content: string }[])[0].content;
   expect(last).toContain("<draft>\nDRAFT-TEXT\n</draft>");
   expect(last).toContain("<review>\nREVIEW-TEXT\n</review>");
+});
+
+test("a recorded answer can be shown and hidden again", async ({ page }) => {
+  await page.goto("#/learn/basic-prompt-structure");
+  const card = page.getByRole("region", { name: "Say hello" });
+  await expect(card.getByText("Demo mode: a recorded answer is available.")).toBeVisible();
+  await card.getByRole("button", { name: "Show Claude's answer" }).click();
+  await expect(card.getByText("Recorded answer", { exact: true })).toBeVisible();
+  await card.getByRole("button", { name: "Hide Claude's answer" }).click();
+  await expect(card.getByText("Recorded answer", { exact: true })).toBeHidden();
+  // The close button in the answer's header does the same.
+  await card.getByRole("button", { name: "Show Claude's answer" }).click();
+  await card.getByRole("button", { name: "Close claude's answer" }).click();
+  await expect(card.getByText("Recorded answer", { exact: true })).toBeHidden();
+  await expect(card.getByRole("button", { name: "Show Claude's answer" })).toBeVisible();
+});
+
+test("a live answer can be closed", async ({ page }) => {
+  await withKey(page);
+  await mockClaude(page, "Hello there!");
+  await page.goto("#/learn/basic-prompt-structure");
+  const card = page.getByRole("region", { name: "Say hello" });
+  await card.getByRole("button", { name: "Run", exact: true }).click();
+  await expect(card.getByText("Hello there!")).toBeVisible();
+  await card.getByRole("button", { name: "Close claude's answer" }).click();
+  await expect(card.getByText("Hello there!")).toBeHidden();
+  await expect(card.getByRole("button", { name: "Run", exact: true })).toBeVisible();
+});
+
+test("key pages have no automatically detectable accessibility problems", async ({ page }) => {
+  for (const scheme of ["light", "dark"] as const) {
+    await page.emulateMedia({ colorScheme: scheme });
+    // Reload so colour transitions from the scheme switch don't skew the contrast check.
+    await page.goto("#/");
+    await page.reload();
+    for (const r of ["", "setup", "settings", "playground", "learn/basic-prompt-structure", "learn/thinking-step-by-step", "learn/complex-prompts"]) {
+      await page.goto(`#/${r}`);
+      await expect(page.locator("h1").first()).toBeVisible();
+      const results = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "best-practice"]).analyze();
+      expect(results.violations.map((v) => `${scheme} /${r}: ${v.id} at ${v.nodes.map((n) => n.target.join(" ")).join(", ")}`)).toEqual([]);
+    }
+  }
 });

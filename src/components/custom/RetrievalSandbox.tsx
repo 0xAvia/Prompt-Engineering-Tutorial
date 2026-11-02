@@ -34,7 +34,7 @@ export function RetrievalSandbox() {
   return (
     <div className="overflow-hidden rounded-2xl border border-line bg-surface shadow-card">
       <header className="border-b border-line px-4 py-3 sm:px-5">
-        <h4 className="font-semibold">Retrieval sandbox: Brightwater Bikes help centre</h4>
+        <h3 className="font-semibold">Retrieval sandbox: Brightwater Bikes help centre</h3>
         <p className="text-sm text-muted">A made-up bike shop with eight help articles. Claude can't know these from training; it only knows what you retrieve.</p>
       </header>
       <div className="space-y-5 p-4 sm:p-5">
@@ -121,7 +121,7 @@ export function RetrievalSandbox() {
             )}
           </div>
           <div className="mt-3">
-            <ResponseView state={state} />
+            <ResponseView state={state} onClose={reset} />
           </div>
         </div>
       </div>

@@ -85,7 +85,7 @@ export function MessageAnatomy() {
         {showCode ? "Hide" : "Show"} what this looks like to the API
       </button>
       {showCode && (
-        <pre className="mt-2 overflow-x-auto rounded-xl border border-line bg-surface-2 p-3.5 font-mono text-[0.78rem] leading-relaxed">
+        <pre tabIndex={0} aria-label="The request as JSON" className="mt-2 overflow-x-auto rounded-xl border border-line bg-surface-2 p-3.5 font-mono text-[0.78rem] leading-relaxed">
           {`{
   "model": "claude-haiku-5-5",
   "max_tokens": 1000,

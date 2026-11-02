@@ -1,4 +1,4 @@
-import { ArrowDownLeft, CircleCheck, CircleX, KeyRound, LoaderCircle, Play, Square, Trophy, Wrench } from "lucide-react";
+import { ArrowDownLeft, CircleCheck, CircleX, KeyRound, LoaderCircle, Play, Square, Trophy, Wrench, X } from "lucide-react";
 import { useRef, useState } from "react";
 import { DB_SOLUTION, DB_TESTS, DB_TOOLS, buildDbTools, calculatorTool, initialDb, runCalculator, runDbTool } from "../../content/tools";
 import { friendlyError, isAbort, type FriendlyError } from "../../lib/claude";
@@ -95,7 +95,7 @@ export function CalculatorSandbox() {
   return (
     <div className="space-y-4 rounded-2xl border border-line bg-surface p-4 shadow-card sm:p-5">
       <div>
-        <h4 className="font-semibold">Claude + a calculator tool</h4>
+        <h3 className="font-semibold">Claude + a calculator tool</h3>
         <p className="text-sm text-muted">
           Claude gets one tool, <code className="font-mono">calculator</code>. Ask for some arithmetic and watch it decide to use the tool. The
           calculation itself runs right here in your browser.
@@ -103,7 +103,7 @@ export function CalculatorSandbox() {
       </div>
       <details className="rounded-xl border border-line bg-surface-2/60 px-3.5 py-2.5 text-sm">
         <summary className="cursor-pointer font-medium">See the tool definition Claude receives</summary>
-        <pre className="mt-2 overflow-x-auto font-mono text-[0.78rem] leading-relaxed">{JSON.stringify(calculatorTool, null, 2)}</pre>
+        <pre tabIndex={0} aria-label="Calculator tool definition" className="mt-2 overflow-x-auto font-mono text-[0.78rem] leading-relaxed">{JSON.stringify(calculatorTool, null, 2)}</pre>
       </details>
       <label className="block">
         <span className="mb-1.5 block text-[0.8rem] font-semibold uppercase tracking-wide text-muted">Your message</span>
@@ -123,6 +123,19 @@ export function CalculatorSandbox() {
           <button type="button" className={btn.primary} onClick={run} disabled={!request.trim()}>
             {apiKey ? <Play className="size-4 fill-current" aria-hidden /> : <KeyRound className="size-4" aria-hidden />}
             {apiKey ? "Run" : "Add API key to run"}
+          </button>
+        )}
+        {status !== "running" && steps.length > 0 && (
+          <button
+            type="button"
+            className={btn.ghost}
+            onClick={() => {
+              setSteps([]);
+              setError(null);
+              setStatus("idle");
+            }}
+          >
+            <X className="size-4" aria-hidden /> Clear
           </button>
         )}
         <span className="self-center text-xs text-faint">Try: “What's 15% of 2,340?” or “What's the capital of France?” (no tool needed)</span>
@@ -198,9 +211,9 @@ export function DatabaseExercise() {
     <section className={`overflow-hidden rounded-2xl border-2 bg-surface shadow-card ${solved ? "border-success/40" : "border-accent/30"}`} aria-labelledby="ex-10.2.1">
       <header className="flex flex-wrap items-center gap-2 border-b border-line bg-accent-soft/50 px-4 py-3 sm:px-5">
         <span className="rounded-full bg-accent px-2.5 py-0.5 text-xs font-bold uppercase tracking-wide text-on-accent">Exercise 10.2.1</span>
-        <h4 id="ex-10.2.1" className="font-semibold">
+        <h3 id="ex-10.2.1" className="font-semibold">
           The world's smallest database
-        </h4>
+        </h3>
         {solved && (
           <span className="ml-auto inline-flex items-center gap-1 rounded-full bg-success-soft px-2.5 py-0.5 text-xs font-semibold text-success">
             <CircleCheck className="size-3.5" aria-hidden /> Solved

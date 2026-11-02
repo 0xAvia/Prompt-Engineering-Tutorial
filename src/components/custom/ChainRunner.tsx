@@ -61,9 +61,9 @@ export function ChainRunner({ preset }: { preset: string }) {
   return (
     <div className="overflow-hidden rounded-2xl border border-line bg-surface shadow-card">
       <header className="border-b border-line px-4 py-3 sm:px-5">
-        <h4 className="flex items-center gap-2 font-semibold">
+        <h3 className="flex items-center gap-2 font-semibold">
           <Link2 className="size-4 text-accent" aria-hidden /> {chain.title}
-        </h4>
+        </h3>
         <p className="text-sm text-muted">{chain.description}</p>
       </header>
       <div className="space-y-3 p-4 sm:p-5">
@@ -80,7 +80,12 @@ export function ChainRunner({ preset }: { preset: string }) {
               <div className="rounded-xl border border-line-strong bg-surface focus-within:border-accent">
                 <PromptEditor label={`Step ${i + 1} prompt`} value={prompts[i]} onChange={(v) => setPrompts((p) => p.map((x, j) => (j === i ? v : x)))} />
               </div>
-              <ResponseView state={states[i]} label={`Step ${i + 1} answer`} compact />
+              <ResponseView
+                state={states[i]}
+                label={`Step ${i + 1} answer`}
+                compact
+                onClose={() => setStates((prev) => prev.map((s, j) => (j === i ? IDLE : s)))}
+              />
             </div>
           </div>
         ))}

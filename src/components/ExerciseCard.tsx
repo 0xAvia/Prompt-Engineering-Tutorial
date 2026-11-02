@@ -1,4 +1,4 @@
-import { ChevronDown, CircleCheck, CircleX, KeyRound, LoaderCircle, MessageSquare, PartyPopper, Play, RotateCcw, Square, Trophy } from "lucide-react";
+import { ChevronDown, CircleCheck, CircleX, KeyRound, LoaderCircle, MessageSquare, PartyPopper, Play, RotateCcw, Square, Trophy, X } from "lucide-react";
 import { useCallback, useMemo, useRef, useState } from "react";
 import type { Exercise, PromptSpec, TestCase } from "../content/types";
 import { friendlyError, isAbort, runPrompt, type FriendlyError } from "../lib/claude";
@@ -86,9 +86,9 @@ export function ExerciseCard({ exercise }: { exercise: Exercise }) {
     >
       <header className="flex flex-wrap items-center gap-2 border-b border-line bg-accent-soft/50 px-4 py-3 sm:px-5">
         <span className="rounded-full bg-accent px-2.5 py-0.5 text-xs font-bold uppercase tracking-wide text-on-accent">Exercise {exercise.id}</span>
-        <h4 id={`ex-${exercise.id}`} className="font-semibold">
+        <h3 id={`ex-${exercise.id}`} className="font-semibold">
           {exercise.title}
-        </h4>
+        </h3>
         {solved && (
           <span className="ml-auto inline-flex items-center gap-1 rounded-full bg-success-soft px-2.5 py-0.5 text-xs font-semibold text-success">
             <CircleCheck className="size-3.5" aria-hidden /> Solved
@@ -139,7 +139,28 @@ export function ExerciseCard({ exercise }: { exercise: Exercise }) {
           )}
         </div>
 
-        {!isMulti && <ResponseView state={single.state} wordCounter={exercise.wordCounter} />}
+        {!isMulti && (
+          <ResponseView
+            state={single.state}
+            wordCounter={exercise.wordCounter}
+            onClose={() => {
+              single.reset();
+              setGraded(null);
+            }}
+          />
+        )}
+        {isMulti && multi.states.length > 0 && !running && (
+          <button
+            type="button"
+            className={btn.ghost}
+            onClick={() => {
+              multi.reset();
+              setGraded(null);
+            }}
+          >
+            <X className="size-4" aria-hidden /> Clear results
+          </button>
+        )}
         {isMulti && <CaseResults cases={exercise.cases!} states={multi.states} />}
 
         {graded && (graded.prompt.length > 0 || graded.response.length > 0 || isMulti) && (
@@ -386,7 +407,7 @@ function RubricCheck({
           </button>
         )}
       </div>
-      <ResponseView state={feedback.state} label="Tutor feedback" compact />
+      <ResponseView state={feedback.state} label="Tutor feedback" compact onClose={feedback.reset} />
     </div>
   );
 }
