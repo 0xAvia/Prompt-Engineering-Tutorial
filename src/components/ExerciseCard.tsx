@@ -42,6 +42,8 @@ export function ExerciseCard({ exercise }: { exercise: Exercise }) {
   const multi = useMultiCase(exercise.cases);
   const isMulti = !!exercise.cases?.length;
   const isRubric = !!exercise.rubric?.length;
+  /** Open-ended exercise with no automatic checks: the learner marks it solved. */
+  const selfGraded = isRubric && !exercise.criteria?.length && !exercise.promptCriteria?.length;
   const running = single.state.status === "running" || multi.running;
   const edited = JSON.stringify(spec) !== JSON.stringify(exercise.start);
 
@@ -65,7 +67,7 @@ export function ExerciseCard({ exercise }: { exercise: Exercise }) {
     }
     const result = await single.run(spec);
     if (!result) return;
-    if (isRubric) return; // graded by the learner's self-check
+    if (selfGraded) return; // graded by the learner's self-check
     const responseResults = grade(result.text, exercise.criteria ?? []);
     const pass = allPass([...promptResults, ...responseResults]);
     setGraded({ prompt: promptResults, response: responseResults, pass });
@@ -113,7 +115,7 @@ export function ExerciseCard({ exercise }: { exercise: Exercise }) {
           ) : apiKey ? (
             <button type="button" className={btn.primary} onClick={onCheck}>
               <Play className="size-4 fill-current" aria-hidden />
-              {isMulti ? `Run on all ${exercise.cases!.length} inputs & check` : isRubric ? "Run" : "Run & check"}
+              {isMulti ? `Run on all ${exercise.cases!.length} inputs & check` : selfGraded ? "Run" : "Run & check"}
             </button>
           ) : (
             <button type="button" className={btn.primary} onClick={openKeyDialog}>
@@ -156,7 +158,7 @@ export function ExerciseCard({ exercise }: { exercise: Exercise }) {
         )}
 
         {isRubric && single.state.status === "done" && (
-          <RubricCheck exercise={exercise} spec={spec} response={single.state.text} solved={solved} onSolved={succeed} />
+          <RubricCheck exercise={exercise} spec={spec} response={single.state.text} solved={solved} selfGraded={selfGraded} onSolved={succeed} />
         )}
 
         {(justSolved || (solved && graded?.pass)) && exercise.takeaway && (
@@ -309,12 +311,14 @@ function RubricCheck({
   spec,
   response,
   solved,
+  selfGraded,
   onSolved,
 }: {
   exercise: Exercise;
   spec: PromptSpec;
   response: string;
   solved: boolean;
+  selfGraded: boolean;
   onSolved: () => void;
 }) {
   const rubric = exercise.rubric!;
@@ -350,8 +354,12 @@ function RubricCheck({
 
   return (
     <div className="space-y-3 rounded-xl border border-line bg-surface-2/50 p-4">
-      <p className="font-semibold">Check your own work</p>
-      <p className="text-sm text-muted">There's no single right answer here. Tick each box once your prompt does it.</p>
+      <p className="font-semibold">{selfGraded ? "Check your own work" : "Going further: a quality checklist"}</p>
+      <p className="text-sm text-muted">
+        {selfGraded
+          ? "There's no single right answer here. Tick each box once your prompt does it."
+          : "Passing the checker is the minimum. A great prompt also does these. Tick what yours covers, or ask Claude for feedback."}
+      </p>
       <ul className="space-y-2">
         {rubric.map((r, i) => (
           <li key={i}>
@@ -371,7 +379,7 @@ function RubricCheck({
         <button type="button" className={btn.secondary} disabled={feedback.state.status === "running"} onClick={() => void feedback.run(reviewSpec)}>
           <MessageSquare className="size-4" aria-hidden /> Get feedback from Claude
         </button>
-        {!solved && (
+        {selfGraded && !solved && (
           <button type="button" className={btn.primary} disabled={!all} onClick={onSolved}>
             <CircleCheck className="size-4" aria-hidden /> Mark as solved
           </button>

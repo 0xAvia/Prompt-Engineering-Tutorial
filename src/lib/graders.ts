@@ -75,13 +75,21 @@ export function usesVariable(name: string): Criterion {
   return { label: `Your prompt uses the {${name}} placeholder`, test: (t) => t.includes(`{${name}}`) };
 }
 
-/** Prompt-side check: the template does not hard-code a word. */
+/** Prompt-side check: the template does not hard-code a word (or words starting with it, like "pigs"). */
 export function doesNotHardcode(word: string, why?: string): Criterion {
+  const re = new RegExp(`\\b${word.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}`, "i");
   return {
     label: why ?? `Your prompt doesn't type “${word}” directly`,
-    test: (t) => !t.toLowerCase().includes(word.toLowerCase()),
+    test: (t) => !re.test(t),
   };
 }
+
+/** Word stems that show a poem is about a given animal, even if it never names it. */
+export const ANIMAL_WORDS: Record<string, string[]> = {
+  pig: ["pig", "swine", "hog", "oink", "snout", "boar", "sow"],
+  cat: ["cat", "kitten", "kitty", "feline", "purr", "whisker", "meow"],
+  dog: ["dog", "pup", "canine", "bark", "wag", "fetch", "hound"],
+};
 
 export interface GradeResult {
   label: string;

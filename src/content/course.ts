@@ -1,8 +1,16 @@
 import type { Chapter, Exercise, Level } from "./types";
 import type { Progress } from "../lib/storage";
 import { ch01 } from "./chapters/01-basic-prompt-structure";
+import { ch02 } from "./chapters/02-being-clear-and-direct";
+import { ch03 } from "./chapters/03-assigning-roles";
+import { ch04 } from "./chapters/04-separating-data";
+import { ch05 } from "./chapters/05-formatting-output";
+import { ch06 } from "./chapters/06-thinking-step-by-step";
+import { ch07 } from "./chapters/07-few-shot-examples";
+import { ch08 } from "./chapters/08-avoiding-hallucinations";
+import { ch09 } from "./chapters/09-complex-prompts";
 
-export const chapters: Chapter[] = [ch01];
+export const chapters: Chapter[] = [ch01, ch02, ch03, ch04, ch05, ch06, ch07, ch08, ch09];
 
 export const levels: { id: Level; title: string; blurb: string }[] = [
   { id: "beginner", title: "Beginner", blurb: "How prompts are put together, and the habits that fix most problems." },
