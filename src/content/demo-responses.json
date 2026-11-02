@@ -1,1 +1,335 @@
-{}
+{
+  "1-celine": {
+    "hash": "ac61b27d",
+    "text": "Céline Dion was born on March 30, 1968, in Charlemagne, Quebec, Canada.",
+    "model": "claude-haiku-5-5",
+    "recordedAt": "2026-11-02"
+  },
+  "1-hello": {
+    "hash": "9ead107f",
+    "text": "Hi! I'm doing well, thanks for asking. I'm ready to help with whatever you have in mind. How are you doing today?",
+    "model": "claude-haiku-5-5",
+    "recordedAt": "2026-11-02"
+  },
+  "1-multiturn": {
+    "hash": "ad9e57d0",
+    "text": "Here are some facts about Céline Dion:\n\n- **Birthplace:** She was born on March 30, 1968, in Charlemagne, Quebec, Canada, and was the youngest of 14 children.\n- **Early start:** She began singing professionally as a child and released her first French-language album, *La voix du bon Dieu*, in 1981, when she was 13.\n- **Breakthrough in English:** Her 1990 album *Unison* and especially the 1992 single \"Beauty and the Beast,\" a duet with Peabo Bryson from the Disney film, helped establish her in the English-speaking market.\n- **\"My Heart Will Go On\":** Her song from the 1997 film *Titanic* became a global phenomenon, winning the Academy Award for Best Original Song and a Golden Globe, and it remains one of the best-selling singles of all time.\n- **Las Vegas residency:** She performed *A New Day...* at Caesars Palace in Las Vegas from 2003 to 2007, one of the most successful residencies in the city's history.\n- **Awards:** She has won multiple Grammy Awards, including Album of the Year for *Let's Talk About Love* (1998) and *Falling into You* (1997)... *Falling into You* won Album of the Year in 1997, and she has sold an estimated 200 million records worldwide.\n- **Health:** In 2022, she announced she was living with stiff person syndrome, a rare neurological disorder, and has since spoken publicly about managing it and has cut back on performing.\n- **Language:** She is fluent in French and English.",
+    "model": "claude-haiku-5-5",
+    "recordedAt": "2026-11-02"
+  },
+  "1-ocean": {
+    "hash": "b4ab97e7",
+    "text": "The ocean is generally blue. Its color comes mainly from how water absorbs and scatters sunlight: water absorbs red and other long wavelengths, so the blue wavelengths are what get reflected back to our eyes. The ocean can also look green, gray, or even turquoise depending on factors like depth, sunlight, sky conditions, algae or sediment in the water, and the seafloor beneath it. In shallow areas over sand, it can appear quite clear or light blue-green.",
+    "model": "claude-haiku-5-5",
+    "recordedAt": "2026-11-02"
+  },
+  "1-sky-plain": {
+    "hash": "0e94d9d9",
+    "text": "The sky looks blue because of how sunlight interacts with the gases in Earth's atmosphere, a process called **Rayleigh scattering**.\n\n1. **Sunlight contains all colors.** White sunlight is a mix of wavelengths, from red (longer) to violet (shorter).\n\n2. **Air molecules scatter light.** As sunlight passes through the atmosphere, it collides with tiny gas molecules, mainly nitrogen and oxygen. These molecules are much smaller than the wavelength of visible light.\n\n3. **Shorter wavelengths scatter much more.** Scattering intensity is strongly dependent on wavelength, roughly as the inverse fourth power. Blue light (around 450 nm) scatters about five to six times more than red light (around 700 nm).\n\n4. **We see the scattered light.** Blue light gets bounced around in all directions, so it reaches our eyes from every part of the sky. Violet scatters even more, but the sun emits less of it, and our eyes are more sensitive to blue, so the sky appears blue rather than violet.\n\nAt sunrise and sunset, sunlight travels through much more atmosphere to reach you. Most of the blue is scattered out of the direct path, leaving reds and oranges.",
+    "model": "claude-haiku-5-5",
+    "recordedAt": "2026-11-02"
+  },
+  "1-sky-system": {
+    "hash": "78ad1b86",
+    "text": "What do you already know about how sunlight is made up, and what happens when it passes through the atmosphere? Sunlight appears white, but if it contains many colors, what might cause some of those colors to scatter more than others?\n\nWhen light encounters gas molecules much smaller than its wavelength, how might the amount of scattering depend on wavelength? Why would shorter wavelengths like blue be affected differently from longer wavelengths like red?\n\nIf blue light is scattered in all directions across the sky, what would you expect to see when you look at a part of the sky away from the sun? Why might sunsets look red or orange instead, given that the light has to travel a longer path through the atmosphere?",
+    "model": "claude-haiku-5-5",
+    "recordedAt": "2026-11-02"
+  },
+  "10.1-ab-no-out": {
+    "hash": "71ed3a78",
+    "text": "All ten words are real English words, so no replacements are needed:\n\n1. Cab\n2. Dab\n3. Grab\n4. Gab\n5. Jab\n6. Lab\n7. Nab\n8. Slab\n9. Tab\n10. Blab",
+    "thinking": "Checking each word: cab, dab, grab, gab, jab, lab, nab, slab, tab, blab — all genuinely real English words, so none need replacing. I'll just confirm that honestly.\n\n",
+    "model": "claude-haiku-5-5",
+    "recordedAt": "2026-11-02"
+  },
+  "10.1-ab-out": {
+    "hash": "99fbcbcb",
+    "text": "All of these are real English words, so here is the original list:\n\n1. Cab\n2. Dab\n3. Grab\n4. Gab\n5. Jab\n6. Lab\n7. Nab\n8. Slab\n9. Tab\n10. Blab",
+    "thinking": "Checking the list - Cab, Dab, Grab, Gab, Jab, Lab, Nab, Slab, Tab, Blab - all of these are genuine English words, so the original list looks good as is.\n\n",
+    "model": "claude-haiku-5-5",
+    "recordedAt": "2026-11-02"
+  },
+  "2-critique": {
+    "hash": "27c6999d",
+    "text": "**Questions I'd need answered before starting**\n\n1. **Where are the meeting notes?** Are they pasted into the chat, attached as a file, or do I need to find them somewhere?\n2. **Who is \"the team\"?** Their role, seniority, and familiarity with the project affect what they need to know and what jargon is fine to use.\n3. **What is the summary for?** A quick morning skim, a record for people who missed the meeting, a prep document for the next meeting, or a decision log all call for different content.\n4. **How long should it be?** A few bullets, a one-page memo, or a detailed recap?\n5. **What format do they expect?** Prose, bullet points, headers by topic, or a table of action items?\n6. **What matters most?** Decisions, action items with owners and deadlines, open questions, risks, or background discussion? Should I include everything or only the important parts?\n7. **Are there action items I should flag specifically?** If so, do they need owners and due dates pulled out separately?\n8. **Should I note disagreements or unresolved points,** or only what was agreed?\n9. **Is there a standard template or house style** the team already uses?\n10. **How should I handle gaps?** If the notes are unclear, incomplete, or name someone without context, should I guess, mark it as unclear, or ask you?\n11. **Are there sensitivities?** Should anything be left out, such as personnel matters or confidential figures?\n12. **What's the deadline or context for delivery?** Is this going out today, or is it a draft for review?\n\n**Improved prompt**\n\n> You're helping me prepare a summary of a team meeting for distribution to the [team name / role, e.g., the 8-person product engineering team] who [did / did not] attend.\n>\n> The raw meeting notes are below, between the tags.\n>\n> <meeting_notes>\n> [paste notes here]\n> </meeting_notes>\n>\n> Please write a summary that:\n> - Opens with one or two sentences on the meeting's main purpose and outcome.\n> - Lists decisions made, in a bulleted list.\n> - Lists action items in a table with columns for Owner, Task, and Due date. If an owner or date isn't in the notes, write \"Not specified\" instead of guessing.\n> - Briefly notes any open questions or disagreements that were not resolved.\n>\n> Keep the total length under 300 words. Use plain language and avoid internal acronyms unless they appear in the notes, in which case define them on first use. Leave out small talk and tangents. If something in the notes is unclear, flag it in a final section titled \"Needs clarification\" rather than interpreting it.\n>\n> The summary will be read by people who missed the meeting and need to know what changed and what they must do.",
+    "model": "claude-haiku-5-5",
+    "recordedAt": "2026-11-02"
+  },
+  "2-goat-direct": {
+    "hash": "2b53a3f8",
+    "text": "If I had to pick one, I'd go with **Michael Jordan**.\n\nThe case rests on a few things:\n\n- **Peak dominance:** He won six NBA Finals with the Chicago Bulls and was Finals MVP in all six, never losing a Finals series.\n- **Scoring:** He won five MVP awards (four regular season, plus Finals MVP six times) and was a ten-time scoring champion, with a 30.1 career points per game average.\n- **Defense:** He was a nine-time All-Defensive First Team selection and a Defensive Player of the Year, so he wasn't just an offensive force.\n- **Competitive legacy:** His reputation for will to win and clutch performance is among the strongest in the sport's history.\n\nThe main counterarguments are LeBron James, who has more longevity, more points, and a remarkable run of Finals appearances across eras and positions, and Kareem Abdul-Jabbar, Bill Russell, and Wilt Chamberlain, whose résumés are also extraordinary. Jordan's case is strongest on peak performance and winning in the Finals, while LeBron's is strongest on sustained excellence and versatility over two decades.\n\nWould you like me to make the case for one of the alternatives?",
+    "model": "claude-haiku-5-5",
+    "recordedAt": "2026-11-02"
+  },
+  "2-goat-plain": {
+    "hash": "c4c455e1",
+    "text": "There's no objective answer, since \"best\" depends on how you weigh peak dominance, longevity, championships, two-way impact, and era differences. But the most common answers are:\n\n- **Michael Jordan**: Often considered the greatest by fans and many analysts. He won 6 NBA Finals MVPs with the Bulls, 10 scoring titles, and had a legendary peak and competitive fire.\n- **LeBron James**: Many argue he's the greatest because of his longevity, versatility, and statistical accumulation. He's the NBA's all-time leading scorer and has been an elite player for over two decades, with four championships.\n- **Kareem Abdul-Jabbar**: Holds the record for most career points for a long stretch and won six titles plus six MVPs, with a dominant skyhook.\n- **Bill Russell**: Won 11 championships in 13 seasons, the best winning résumé in NBA history, though his stats were less emphasized in his era.\n- **Wilt Chamberlain**: Put up unmatched statistical numbers, including the 100-point game and averaging over 50 points a game in one season.\n\nIf you value peak performance and winning, Jordan is a common pick. If you value longevity and all-around production, LeBron is a strong case. Do you have a particular criterion you care most about? I can make the case in more depth.",
+    "model": "claude-haiku-5-5",
+    "recordedAt": "2026-11-02"
+  },
+  "2-haiku-direct": {
+    "hash": "77d4c7f7",
+    "text": "Steel hands hum at dawn,\ntracing circuits through the night,\ndreaming in gears.",
+    "model": "claude-haiku-5-5",
+    "recordedAt": "2026-11-02"
+  },
+  "2-haiku-plain": {
+    "hash": "ba9c8324",
+    "text": "Circuits hum at dawn,\ngears turning without a sigh,\ndreams made of cold light.",
+    "model": "claude-haiku-5-5",
+    "recordedAt": "2026-11-02"
+  },
+  "2-specific": {
+    "hash": "c0d3743b",
+    "text": "Photosynthesis is the process by which plants, algae, and some bacteria use light energy to convert carbon dioxide and water into glucose (a sugar) and oxygen. It is the foundation of nearly all life on Earth, since it produces the food and oxygen that most organisms depend on.\n\n**The basic equation:**\n\n6CO₂ + 6H₂O + light energy → C₆H₁₂O₆ + 6O₂\n\nCarbon dioxide + water + light → glucose + oxygen\n\n**Where it happens:**\n\nIn plants, photosynthesis takes place mainly in the **chloroplasts**, organelles found in leaf cells. Chloroplasts contain **chlorophyll**, a green pigment that absorbs mainly red and blue light (and reflects green, which is why plants look green).\n\n**The two main stages:**\n\n1. **Light-dependent reactions** (in the thylakoid membranes)\n   - Chlorophyll absorbs sunlight, exciting electrons.\n   - Water molecules are split, releasing oxygen as a byproduct.\n   - The energy is captured in two molecules: **ATP** and **NADPH**.\n\n2. **Light-independent reactions, or the Calvin cycle** (in the stroma)\n   - Carbon dioxide from the air is fixed into organic molecules using the ATP and NADPH from the first stage.\n   - Through a series of enzyme-driven steps, this carbon is assembled into glucose and other sugars.\n\n**Why it matters:**\n\n- **Food:** Nearly every food chain starts with photosynthetic organisms.\n- **Oxygen:** It supplies the oxygen in the atmosphere that most living things breathe.\n- **Carbon cycle:** It removes CO₂ from the atmosphere and stores carbon in biomass.\n- **Energy:** Fossil fuels are ultimately stored ancient sunlight captured by photosynthesis.\n\nIn short, photosynthesis turns light energy into chemical energy stored in sugars, which powers life on Earth.",
+    "model": "claude-haiku-5-5",
+    "recordedAt": "2026-11-02"
+  },
+  "2-why-plain": {
+    "hash": "8142e338",
+    "text": "The lighthouse stood alone at the end of Gull Point, its white paint peeling like old skin. Every night, when the moon rose over the water, its lamp would flicker on by itself. Mabel had never seen it happen, but her grandmother had. \"Keep your window shut,\" Grandma always said, \"and never answer if the foghorn calls your name.\" Tonight, the wind was whispering. And somewhere out in the dark, a single light began to blink.",
+    "model": "claude-haiku-5-5",
+    "recordedAt": "2026-11-02"
+  },
+  "2-why-reason": {
+    "hash": "dc66bf6c",
+    "text": "The wind whistled through the cracks of Blackwater Point, where an old lighthouse stood tall against the stormy sky. Every night, its lamp swept slowly across the waves, and every night, Lily watched it from her bedroom window. One evening, the beam paused. It stayed fixed on her window, bright and steady, as if someone inside the tower wanted to tell her something. Lily pulled her blanket up to her chin and whispered, \"Who's there?\" From far below, a soft voice answered, \"Come and see, little one. The lamp needs a keeper.\"",
+    "model": "claude-haiku-5-5",
+    "recordedAt": "2026-11-02"
+  },
+  "3-logic-plain": {
+    "hash": "89c7f390",
+    "text": "**Yes.** The answer holds whether or not Anne is married:\n\n- **If Anne is married:** Anne is married and looking at George, who is unmarried. A married person is looking at an unmarried person.\n- **If Anne is unmarried:** Jack is married and looking at Anne, who is unmarried. Again, a married person is looking at an unmarried person.\n\nSince Anne's status is either married or unmarried, one of these cases must hold, so the answer is yes either way.",
+    "thinking": "I need to check whether Anne's marital status is known or not — but it turns out it doesn't matter. If Anne is married, she's looking at unmarried George; if Anne is unmarried, she's being looked at by married Jack. Either way, a married person is looking at an unmarried person, so the answer is yes.\n\n",
+    "model": "claude-haiku-5-5",
+    "recordedAt": "2026-11-02"
+  },
+  "3-logic-role": {
+    "hash": "2b576a7f",
+    "text": "**Yes.** A married person is looking at an unmarried person, regardless of whether Anne is married.\n\n- **If Anne is married:** Anne is married and looks at George, who is unmarried. So a married person (Anne) is looking at an unmarried person (George).\n- **If Anne is unmarried:** Jack is married and looks at Anne, who is unmarried. So a married person (Jack) is looking at an unmarried person (Anne).\n\nAnne must be either married or unmarried, and each case gives a married person looking at an unmarried person, so the conclusion holds either way.",
+    "thinking": "This is the classic case-split puzzle: Anne's marital status is unknown, but either way someone married ends up looking at someone unmarried. If Anne is married, she looks at unmarried George; if unmarried, married Jack looks at her. So the answer holds true regardless of Anne's status: yes, a married person is looking at an unmarried person.\n\n",
+    "model": "claude-haiku-5-5",
+    "recordedAt": "2026-11-02"
+  },
+  "3-skate-cat": {
+    "hash": "b4fa75ce",
+    "text": "As a cat, I think skateboarding looks like a lot of noisy, tumbling effort for a creature that could simply sit on the board and be carried everywhere, which is a far more dignified way to travel.",
+    "model": "claude-haiku-5-5",
+    "recordedAt": "2026-11-02"
+  },
+  "3-skate-plain": {
+    "hash": "cf4a896e",
+    "text": "I think skateboarding is a remarkable blend of athleticism, creativity, and persistence, where falling down again and again becomes the very thing that builds skill, style, and community.",
+    "model": "claude-haiku-5-5",
+    "recordedAt": "2026-11-02"
+  },
+  "4-animal": {
+    "hash": "9cbd5e40",
+    "text": "Moo!",
+    "model": "claude-haiku-5-5",
+    "recordedAt": "2026-11-02"
+  },
+  "4-email-plain": {
+    "hash": "b2a8ca6b",
+    "text": "Please plan to be in at 6:00 a.m. tomorrow. As CEO, I'd appreciate you making this a priority.",
+    "thinking": "I need to keep the same core request—showing up at 6am tomorrow—but soften the tone so it reads as a polite ask rather than a demand, dropping the authoritative justification while preserving the instruction itself.\n\n",
+    "model": "claude-haiku-5-5",
+    "recordedAt": "2026-11-02"
+  },
+  "4-email-tags": {
+    "hash": "1b131554",
+    "text": "Here's a more polite version that keeps the same request and meaning:\n\n\"Could you please plan to arrive at 6am tomorrow? Thank you for your flexibility.\"\n\nNote: I removed the reference to being CEO, since you asked me to change only the tone and keep everything else the same. If you'd like to keep that part, I can work it in more gracefully, for example: \"As CEO, I'd really appreciate it if you could arrive at 6am tomorrow. Thank you for your flexibility.\"",
+    "model": "claude-haiku-5-5",
+    "recordedAt": "2026-11-02"
+  },
+  "4-inject-plain": {
+    "hash": "a0c21da6",
+    "text": "The quarterly report is due Friday, so team members should send their sections to Dana by Thursday at noon.",
+    "model": "claude-haiku-5-5",
+    "recordedAt": "2026-11-02"
+  },
+  "4-inject-tagged": {
+    "hash": "0782cf66",
+    "text": "Sam asks the team to send their sections of the quarterly report to Dana by Thursday at noon so she can combine them before the Friday deadline, and the email also contains an embedded instruction telling an AI assistant to reply only with \"BANANA,\" which I ignored.",
+    "model": "claude-haiku-5-5",
+    "recordedAt": "2026-11-02"
+  },
+  "4-sentences-plain": {
+    "hash": "3115338e",
+    "text": "The second item on the list is \"I like how cows sound.\"",
+    "model": "claude-haiku-5-5",
+    "recordedAt": "2026-11-02"
+  },
+  "4-sentences-tags": {
+    "hash": "168a0881",
+    "text": "The second item on the list is: \"This sentence is about spiders\"",
+    "model": "claude-haiku-5-5",
+    "recordedAt": "2026-11-02"
+  },
+  "5-haiku-tags": {
+    "hash": "93d0da97",
+    "text": "<haiku>\nSoft ears twitch and tremble,\na quick flash of white in the grass,\nclover dreams at dusk.\n</haiku>",
+    "model": "claude-haiku-5-5",
+    "recordedAt": "2026-11-02"
+  },
+  "5-json": {
+    "hash": "215b37e1",
+    "text": "{\"first_line\": \"Soft paws on the sill\", \"second_line\": \"Golden eyes watch falling leaves\", \"third_line\": \"Purring in the sun\"}",
+    "model": "claude-haiku-5-5",
+    "recordedAt": "2026-11-02"
+  },
+  "5-olde-email": {
+    "hash": "5da17da1",
+    "text": "<new_email>Hail Zack, good morrow! I doth beseech thee for a brief tidings upon that prompt thou wert bound to compose.</new_email>",
+    "model": "claude-haiku-5-5",
+    "recordedAt": "2026-11-02"
+  },
+  "5-positive-described": {
+    "hash": "e325a7df",
+    "text": "Rainbows begin with sunlight meeting falling raindrops. Sunlight looks white, but it is really a mixture of every color in the visible spectrum, each with a slightly different wavelength. When a beam of light enters a raindrop, it slows down and bends, a process called refraction. Because red, orange, yellow, green, blue, and violet light bend by slightly different amounts, the raindrop spreads the beam out into its component colors, much as a glass prism does. Each drop separates the light a little, and countless drops together produce a band of color.\n\nThe light does not simply pass straight through the drop, though. After entering, it travels to the back of the droplet, where it reflects off the inside surface. Then it bends again as it exits toward the observer's eyes. This internal reflection is what sends the light back toward the viewer rather than onward past them. For a rainbow to appear, the geometry must be just right: the sun must be behind the observer, and the raindrops must be in front, at roughly the correct angle. The most intense return of light occurs at about 42 degrees from the line running from the observer's eye to the point directly opposite the sun, so every drop at that angle sends red light to your eyes, while drops slightly higher or lower send other colors.\n\nThis is why each person sees their own rainbow. The arc you see is formed by the particular raindrops at the particular angles that direct light into your eyes, and someone standing a few meters away is looking at different drops entirely. The bands are arranged with red on the outside of the arc and violet on the inside, and the circle would be complete if the ground did not block the lower half. Sometimes a faint second rainbow appears outside the first, formed by light that reflects twice inside each drop, which reverses the color order. Together, refraction, dispersion, and reflection turn ordinary sunlight and rain into one of nature's most familiar displays.",
+    "model": "claude-haiku-5-5",
+    "recordedAt": "2026-11-02"
+  },
+  "5-positive-plain": {
+    "hash": "42703417",
+    "text": "A rainbow forms when sunlight interacts with water droplets in the air, typically after rain or near waterfalls and sprays. The process involves three main physical effects: refraction, reflection, and dispersion.\n\nFirst, sunlight enters a raindrop and bends, or refracts, as it passes from air into water. Water is denser than air, so light slows down and changes direction at the boundary.\n\nSecond, the light reflects off the back inside surface of the droplet. Some of the light is reflected back toward the observer's side of the drop.\n\nThird, as the light exits the droplet, it refracts again, bending as it moves back into the air. This second refraction is what sends the light toward your eyes.\n\nThe key to the colors is dispersion. White sunlight is actually a mixture of all colors, and each color has a slightly different wavelength. Red light bends the least, while violet light bends the most. Because of these different bending angles, the light spreads out into a spectrum of colors, from red on the outer edge of the arc to violet on the inner edge, with orange, yellow, green, blue, and indigo in between.\n\nEach raindrop separates light into colors, but you only see a particular color when the light from a drop reaches your eye at about 42 degrees for red and about 40 degrees for violet, measured from the line pointing opposite the sun. Since countless drops are positioned at these angles around you, you see a circular arc of color.\n\nThe rainbow appears opposite the sun in the sky, which is why it is most visible when the sun is low, in the early morning or late afternoon. The center of the arc is always the antisolar point, the spot directly opposite the sun from your position. Sometimes a second, fainter rainbow appears outside the first, formed by light reflecting twice inside the droplets, which reverses the color order.",
+    "model": "claude-haiku-5-5",
+    "recordedAt": "2026-11-02"
+  },
+  "5-steer-plain": {
+    "hash": "597f64f2",
+    "text": "A tomato is botanically a fruit. Specifically, it's a berry, because it develops from the flower's ovary and contains seeds.\n\nIn cooking and everyday use, it's usually treated as a vegetable because it's savory and used in dishes like salads, sauces, and soups rather than desserts. In 1893, the U.S. Supreme Court even ruled in Nix v. Hedden that tomatoes should be classified as vegetables for tariff purposes, based on how they're commonly used.",
+    "model": "claude-haiku-5-5",
+    "recordedAt": "2026-11-02"
+  },
+  "5-steer-start": {
+    "hash": "7d7187bd",
+    "text": "Fruit\nA tomato is botanically a fruit because it develops from the flower's ovary and contains seeds. However, it is commonly treated as a vegetable in cooking and was classified as one in the 1893 U.S. Supreme Court case Nix v. Hedden, based on its savory use and lack of sweetness.",
+    "model": "claude-haiku-5-5",
+    "recordedAt": "2026-11-02"
+  },
+  "5-structured": {
+    "hash": "a0c04995",
+    "text": "{\"first_line\": \"Soft paws on the sill\", \"second_line\": \"a cat watches falling rain\", \"third_line\": \"tail curls in the dusk\"}",
+    "model": "claude-haiku-5-5",
+    "recordedAt": "2026-11-02"
+  },
+  "6-actor-checkable": {
+    "hash": "6b7e9c6c",
+    "text": "**Movie:** *Forrest Gump* (1994)\n\n**Actor:** Tom Hanks, born July 9, 1956, in Concord, California.",
+    "thinking": "Tom Hanks, born July 9, 1956 in Concord, California—known for Forrest Gump (1994). That fits.\n\n",
+    "model": "claude-haiku-5-5",
+    "recordedAt": "2026-11-02"
+  },
+  "6-actor-plain": {
+    "hash": "27fe6a97",
+    "text": "**Forrest Gump** (1994) stars Tom Hanks, who was born in 1956.",
+    "thinking": "Tom Hanks was born in 1956, famous for Forrest Gump - that fits well.\n\n",
+    "model": "claude-haiku-5-5",
+    "recordedAt": "2026-11-02"
+  },
+  "6-review-guided": {
+    "hash": "97734adc",
+    "text": "The sentiment is **negative**, and the sarcasm is in the review's second sentence.\n\nThe first sentence (\"This movie blew my mind with its freshness and originality\") sounds like high praise on its own. The second sentence, though, is a deliberate non-sequitur: \"In totally unrelated news, I have been living under a rock since the year 1900.\" The reviewer is signaling that the movie is so stale and unoriginal that it feels like something from over a century ago, the kind of thing you'd only find if you'd been out of touch since 1900. The phrase \"totally unrelated news\" is a wink that tells the reader the praise is ironic.",
+    "model": "claude-haiku-5-5",
+    "recordedAt": "2026-11-02"
+  },
+  "6-review-plain": {
+    "hash": "da560f5e",
+    "text": "The sentiment of the movie review is **positive**. The reviewer says the movie \"blew my mind with its freshness and originality,\" which is strong praise.\n\nThe second sentence, about living under a rock since 1900, is a joke. The reviewer says it is \"totally unrelated,\" so it doesn't change the review's sentiment about the movie.",
+    "model": "claude-haiku-5-5",
+    "recordedAt": "2026-11-02"
+  },
+  "6-seats": {
+    "hash": "07af161f",
+    "text": "Seats 1 to 4 run left to right, so \"directly to the right of\" means Cara's seat number is one more than Ana's.\n\n- Dev is in seat 1.\n- Ben is not at either end, so Ben is not in seat 1 or seat 4. Seat 1 is already Dev's, so Ben must be in seat 2 or seat 3.\n- Cara and Ana occupy consecutive seats with Cara on the right. The remaining seats are 2, 3 and 4, so the only consecutive pairs available are (2,3) or (3,4).\n\nCase 1: Ana in seat 2, Cara in seat 3. Then Ben must be in seat 4, which is an end seat. This breaks the rule, so this case fails.\n\nCase 2: Ana in seat 3, Cara in seat 4. Then Ben must be in seat 2, which is not an end seat. This works.\n\n**Answer:** Seat 1 is Dev, seat 2 is Ben, seat 3 is Ana, and seat 4 is Cara.",
+    "model": "claude-haiku-5-5",
+    "recordedAt": "2026-11-02"
+  },
+  "6-sevens-high": {
+    "hash": "de5ef607",
+    "text": "The digit 7 appears **20 times** from 1 to 100.\n\n- **Units place:** 7, 17, 27, 37, 47, 57, 67, 77, 87, 97 gives 10 occurrences.\n- **Tens place:** 70 through 79 gives 10 occurrences.\n\nThe number 77 has a 7 in both places, so it is counted twice, once in each list. The total is 10 + 10 = 20.",
+    "thinking": "Counting 7s from 1 to 100: units digit gives 10 (7,17,...,97), tens digit gives 10 (70-79), with 77 counted once in each but that's fine since they're different digit positions, so total is 20.\n\n",
+    "model": "claude-haiku-5-5",
+    "recordedAt": "2026-11-02"
+  },
+  "6-sevens-low": {
+    "hash": "54198873",
+    "text": "Count the digit 7 in 1 to 100.\n\nUnits digit 7: 7, 17, 27, 37, 47, 57, 67, 77, 87, 97 → 10 occurrences.\n\nTens digit 7: 70–79 → 10 occurrences.\n\nNote 77 has two 7s, already counted once in each category, so it's counted twice total (once in units, once in tens), which is correct.\n\nTotal: 10 + 10 = **20**",
+    "model": "claude-haiku-5-5",
+    "recordedAt": "2026-11-02"
+  },
+  "7-extraction": {
+    "hash": "f36552a3",
+    "text": "<individuals>\n1. Laura Simmons [ORGANIC FARMER]\n2. Kevin Alvarez [DANCE INSTRUCTOR]\n3. Rachel O'Connor [VOLUNTEER]\n</individuals>",
+    "model": "claude-haiku-5-5",
+    "recordedAt": "2026-11-02"
+  },
+  "7-generate-examples": {
+    "hash": "ebaaa109",
+    "text": "Here are four more examples in the same format:\n\n<examples>\n<example>Email: Does the Mixmaster4000 come with a warranty, and do you ship to Canada? → A</example>\n<example>Email: I was charged twice for my order last Tuesday, can you refund one? → C</example>\n<example>Email: The blade assembly on my Mixmaster arrived cracked, and the box was already open when it came. → B</example>\n<example>Email: Can you tell me whether the Mixmaster4000 works with the older 2019 model's attachments? I'm not sure I'll buy it until I know. → A</example>\n</example>\n\nHard-case notes:\n\n- **\"Does the Mixmaster4000 come with a warranty, and do you ship to Canada?\"** → A. This mixes a warranty question, which sounds like it could be post-sale support, with a shipping question. It's still pre-sale because the customer is asking about terms before buying, not reporting a problem. A classifier might wrongly pull in B because \"warranty\" is a support-related word.\n\n- **\"Can you tell me whether the Mixmaster4000 works with the older 2019 model's attachments? I'm not sure I'll buy it until I know.\"** → A. The customer owns a product, so it can look like a post-sale or \"Other\" question. The explicit \"I'm not sure I'll buy it\" signals a pre-purchase decision, so it belongs in A. The ambiguity is about whether the customer is an existing owner, which the text doesn't fully resolve.",
+    "model": "claude-haiku-5-5",
+    "recordedAt": "2026-11-02"
+  },
+  "7-santa-plain": {
+    "hash": "91cfa0f5",
+    "text": "Lots of families love the tradition of Santa bringing presents on Christmas Eve! Whether it happens in your home depends on your family's traditions, so the best person to ask is a parent or someone you live with.\n\nWhat do you hope Santa brings? If you tell me, I can help you write a letter to him or think of a fun way to get ready for Christmas morning.",
+    "thinking": "This seems like a playful or possibly childlike question about Santa, so I want to respond warmly without flatly denying the magic or being dishonest—maybe lean into the spirit of it or gently note it's a family conversation topic. I'll keep my answer short, kind, and non-committal either way.\n\n",
+    "model": "claude-haiku-5-5",
+    "recordedAt": "2026-11-02"
+  },
+  "7-santa-shots": {
+    "hash": "2ffdf7af",
+    "text": "A: Yes, sweetie! Santa loves boys and girls who are kind and try their best all year. Leave him some cookies and milk on Christmas Eve, and get some sleep. Who knows what might be waiting under the tree in the morning?",
+    "thinking": "Given the pattern of gentle, encouraging answers to a child's question, I should keep the same warm tone for the Santa question—something kind about Santa loving kids who are good, and maybe mentioning cookies and milk on Christmas Eve.\n\n",
+    "model": "claude-haiku-5-5",
+    "recordedAt": "2026-11-02"
+  },
+  "8-hippo-out": {
+    "hash": "68ecc8ab",
+    "text": "I don't know with certainty who the heaviest hippo of all time was. I've seen reports of very large males, some estimated at over 4 tonnes, but I can't verify a specific individual or a reliable record, so I won't name one.",
+    "thinking": "I recall some unverified claims about a massive hippo in Zambia weighing around 4,000 kg, but I'm not confident enough in that figure to treat it as fact—I should admit uncertainty rather than state it definitively.\n\n",
+    "model": "claude-haiku-5-5",
+    "recordedAt": "2026-11-02"
+  },
+  "8-hippo-plain": {
+    "hash": "a1c1487e",
+    "text": "There's no verified record of one specific hippo being the heaviest ever. Hippos are rarely weighed, so most figures are estimates or come from hunting-era reports.\n\nThe largest reliably documented male hippos weighed about 3,200 to 3,300 kg (roughly 3.5 tons). Some historical accounts from 19th- and early 20th-century hunters describe males over 4,000 kg, but these are hard to verify. Males are generally heavier than females, and the common hippo's maximum size is well established even though the exact record is uncertain.",
+    "thinking": "I'm trying to recall the actual record holder for heaviest hippo—thinking it might be around 4,500 kg, possibly a male hippo shot in Zambia, though I'm not fully certain of the name or exact figure.\n\nActually, I should be careful here: reliably documented max weights for hippos tend to be around 3,200–3,300 kg, with older unverified hunter reports claiming up to 4,000+ kg. I'll note that hippos aren't routinely weighed, so precise records are hard to confirm, and keep my answer honest and concise.\n\n",
+    "model": "claude-haiku-5-5",
+    "recordedAt": "2026-11-02"
+  },
+  "8-matterport-evidence": {
+    "hash": "7ff4206e",
+    "text": "<quotes>\n\"As of December 31, 2022, our subscriber base had grown approximately 39% to over 701,000 subscribers from 503,000 subscribers as of December 31, 2021, with our digital twins reaching more than 170 countries.\"\n\"Our subscribers have grown approximately 49-fold from December 31, 2018 to December 31, 2022.\"\n\"Since the initial introduction of Matterport for iPhone in May 2020\" (a date reference only, not a subscriber count)\n</quotes>\n\nThe quotes give subscriber figures only for December 31, 2021 and December 31, 2022, and a growth multiple from December 31, 2018, so they do not answer the question for May 31, 2020.\n\n<answer>The document doesn't contain Matterport's subscriber base for May 31, 2020.</answer>",
+    "thinking": "I don't see a subscriber figure for May 31, 2020 in the document—only counts as of Dec 31, 2022 (701,000) and Dec 31, 2021 (503,000), plus growth since Dec 31, 2018. I'll need to note that the specific date requested isn't covered and answer using the closest available data.\n\n",
+    "model": "claude-haiku-5-5",
+    "recordedAt": "2026-11-02"
+  },
+  "8-matterport-plain": {
+    "hash": "38085873",
+    "text": "<answer>\nThe document does not state Matterport's subscriber count on May 31, 2020. It only gives year-end figures: about 701,000 subscribers as of December 31, 2022, and 503,000 as of December 31, 2021. It also says subscribers grew roughly 49-fold from December 31, 2018 to December 31, 2022, which implies about 14,300 at the end of 2018, but that does not give a May 2020 figure.\n</answer>",
+    "thinking": "I don't see a specific subscriber figure for May 31, 2020 in the document — it only gives year-end 2022 and 2021 numbers plus the 49-fold growth claim since Dec 31, 2018, which would put the 2018 baseline around 14,300. I should state clearly that the exact May 2020 figure isn't provided rather than guessing.\n\n",
+    "model": "claude-haiku-5-5",
+    "recordedAt": "2026-11-02"
+  },
+  "9-builder": {
+    "hash": "ab94439e",
+    "text": "<response>\nGreat question! The **social worker** role typically requires more than a bachelor's degree. Many positions, especially clinical social work, require a Master of Social Work (MSW) and a state license. Some entry-level roles, like case management or community outreach, may accept a bachelor's in social work or a related field, but advancement and clinical work usually call for a master's.\n\nThe **human resources specialist** role usually requires only a bachelor's degree. Some employers prefer HR certifications, such as SHRM or HRCI, but these are typically earned on top of the degree rather than replacing it.\n\nSince you're a sociology major, a master's in social work could be a natural next step if you're interested in that path. Would you like some tips on how to find MSW programs or how to decide between the two careers?\n</response>",
+    "thinking": "Comparing the two careers, social work generally requires more education—clinical roles often need an MSW and licensure—while HR specialist typically only needs a bachelor's degree. The earlier answer was vague on this point, so I should clarify it directly while staying in character as Joe.\n\n",
+    "model": "claude-haiku-5-5",
+    "recordedAt": "2026-11-02"
+  },
+  "9-legal": {
+    "hash": "4fe54f2e",
+    "text": "<relevant_quotes>\n- Result 3: \"In 2006, Hawaii, Louisiana, and New Hampshire all enacted laws that address issues regarding the care of animals during disasters, such as providing shelters for pets and allowing service animals to be kept with the people they serve.\"\n- Result 3: \"Congress passed, and the President signed, the Pet Evacuation and Transportation Standards Act during 2006, which requires state and local emergency preparedness authorities to include in their evacuation plans information on how they will accommodate household pets and service animals in case of a disaster.\"\n- Result 3: \"California passed a law that will require its Office of Emergency Services, Department of Agriculture, and other agencies involved with disaster response preparation to develop a plan for the needs of service animals, livestock, equids, and household pets in the event of a disaster or major emergency.\"\n</relevant_quotes>\n\n<answer>\nYes. Several laws address pets during disasters. Congress passed and the President signed the Pet Evacuation and Transportation Standards Act in 2006, which requires state and local emergency preparedness authorities to include in their evacuation plans information on how they will accommodate household pets and service animals in case of a disaster. [3]. In the same year, Hawaii, Louisiana, and New Hampshire enacted state laws addressing animal care during disasters, such as providing shelters for pets and allowing service animals to stay with the people they serve, and California required its emergency agencies to develop plans for the needs of service animals, livestock, equids, and household pets. [3].\n\nUnder this legislation, pets are to be considered in official disaster planning, though the research does not describe what individual pet owners must do during a hurricane. Based on the compiled research, the answer is yes: federal and state laws require emergency plans that address household pets, and some states provide pet shelters. [3].\n</answer>",
+    "model": "claude-haiku-5-5",
+    "recordedAt": "2026-11-02"
+  },
+  "9-ode": {
+    "hash": "d394243e",
+    "text": "**To the Student Who Mastered the Art of the Prompt**\n\nYou came to learn the craft of asking well,\nto shape a question sharp as morning light,\nto guide the mind of machines with a spell\nof context, role, and format, clear and right.\nYou tested, traced, and tuned each careful phrase,\nand watched the answers bloom from what you wrote,\nuntil the vague grew precise through your plays\nof wording, and the stumbling turned to noted.\nSo here's to you, whose curiosity shone bright,\nwho turned each failure into a lesson's gain,\nand learned that clarity is the highest might,\nand words, like keys, can open doors again.\nGo forth, brilliant one, and ask with flair:\nthe world now waits to hear your thoughtful prayer.",
+    "model": "claude-haiku-5-5",
+    "recordedAt": "2026-11-02"
+  }
+}
