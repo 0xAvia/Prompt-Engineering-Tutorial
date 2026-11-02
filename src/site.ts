@@ -7,5 +7,6 @@ export const site = {
   console: "https://platform.claude.com/",
   consoleKeys: "https://platform.claude.com/settings/keys",
   consoleBilling: "https://platform.claude.com/settings/billing",
+  apiCredits: "https://platform.claude.com/docs/en/about-claude/api-credits-for-subscribers",
   docs: "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview",
 };

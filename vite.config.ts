@@ -1,12 +1,47 @@
-import { defineConfig } from "vitest/config";
+import { createHash } from "node:crypto";
+import { defineConfig, type Plugin } from "vitest/config";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
+
+/**
+ * Bakes a Content-Security-Policy into the built index.html (GitHub Pages can't set
+ * response headers). Scripts may only come from this site, and the page may only talk
+ * to Anthropic's API, so even an injected script could not send a learner's key
+ * anywhere else. Dev mode is left alone so HMR keeps working.
+ */
+function cspMeta(): Plugin {
+  return {
+    name: "csp-meta",
+    apply: "build",
+    transformIndexHtml: {
+      order: "post",
+      handler(html) {
+        // Allow the tiny inline theme script by hash, so no 'unsafe-inline' for scripts.
+        const hashes = [...html.matchAll(/<script(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script>/g)].map(
+          (m) => `'sha256-${createHash("sha256").update(m[1]).digest("base64")}'`,
+        );
+        const csp = [
+          "default-src 'self'",
+          ["script-src 'self'", ...hashes].join(" "),
+          "style-src 'self' 'unsafe-inline'", // the editor injects its own <style> elements
+          "img-src 'self' data:",
+          "font-src 'self' data:", // Vite inlines tiny font subsets as data: URIs
+          "connect-src 'self' https://api.anthropic.com",
+          "object-src 'none'",
+          "base-uri 'self'",
+          "form-action 'self'",
+        ].join("; ");
+        return [{ tag: "meta", attrs: { "http-equiv": "Content-Security-Policy", content: csp }, injectTo: "head-prepend" }];
+      },
+    },
+  };
+}
 
 // The site is served from https://<user>.github.io/Prompt-Engineering-Tutorial/
 // Override with BASE_PATH=/ for other hosts.
 export default defineConfig({
   base: process.env.BASE_PATH ?? "/Prompt-Engineering-Tutorial/",
-  plugins: [react(), tailwindcss()],
+  plugins: [react(), tailwindcss(), cspMeta()],
   // The editor and the Claude SDK are big, but they load only on lesson pages.
   build: { chunkSizeWarningLimit: 700 },
   test: {
